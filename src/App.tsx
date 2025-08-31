@@ -15,6 +15,22 @@ const merchantCategories: {
   [category: string]: { keywords: string[]; description: string };
 } = merchantsData;
 
+// 統計資訊
+const activeCardsCount = allCards.filter(
+  (card) => card.isActive !== false
+).length;
+const totalBenefits = allCards.reduce(
+  (sum, card) => sum + card.benefits.length,
+  0
+);
+const lastUpdateDate = new Date()
+  .toLocaleDateString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  .replace(/\//g, '-');
+
 function App() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | undefined>(
@@ -152,6 +168,24 @@ function App() {
           <p className="text-base sm:text-lg text-base-content/70 mt-2">
             信用卡優惠查詢
           </p>
+          <div className="flex flex-wrap justify-center gap-2 mt-4 text-xs text-base-content/50">
+            <div className="badge badge-ghost gap-1 px-3 py-2">
+              <span>💳</span>
+              <span>共 {allCards.length} 張卡片</span>
+            </div>
+            <div className="badge badge-ghost gap-1 px-3 py-2">
+              <span>✅</span>
+              <span>{activeCardsCount} 張現行卡</span>
+            </div>
+            <div className="badge badge-ghost gap-1 px-3 py-2">
+              <span>🎁</span>
+              <span>{totalBenefits} 項優惠</span>
+            </div>
+            <div className="badge badge-ghost gap-1 px-3 py-2">
+              <span>📅</span>
+              <span>更新: {lastUpdateDate}</span>
+            </div>
+          </div>
         </header>
 
         <main>
