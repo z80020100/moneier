@@ -113,35 +113,42 @@ export function CardItem({
   return (
     <div className="card bg-base-100 shadow-lg sm:shadow-xl hover:shadow-xl sm:hover:shadow-2xl transition-shadow mx-2 sm:mx-0">
       <div className="card-body p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-3">
-          <div className="flex-1">
-            <h2 className="card-title text-lg sm:text-xl mb-2">
-              <span className="text-base sm:text-lg">{card.bank}</span>
-              <span className="text-primary font-bold">{card.name}</span>
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {isOwned && (
-                <span className="badge badge-primary text-xs">我的卡</span>
-              )}
-              {!card.isActive && (
-                <span className="badge badge-ghost text-xs">停發</span>
-              )}
+        <div className="flex flex-col gap-3 mb-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <h2 className="card-title text-lg sm:text-xl mb-2">
+                <span className="text-base sm:text-lg">{card.bank}</span>
+                <span className="text-primary font-bold">{card.name}</span>
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {isOwned && (
+                  <span className="badge badge-success text-xs">✓ 我的卡</span>
+                )}
+                {!card.isActive && (
+                  <span className="badge badge-ghost text-xs">停發</span>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="flex sm:flex-col gap-2 sm:ml-4 justify-end">
             <button
-              className={`btn btn-sm sm:btn-md h-10 px-4 text-sm ${isOwned ? 'btn-ghost' : 'btn-primary'}`}
-              onClick={() => onToggleOwn(card.id)}
-            >
-              {isOwned ? '移除' : '我有此卡'}
-            </button>
-            <button
-              className={`btn btn-sm sm:btn-md btn-circle h-10 w-10 text-lg ${isFavorite ? 'btn-warning' : 'btn-ghost'}`}
+              className={`btn btn-circle min-h-10 h-10 w-10 ml-3 ${isFavorite ? 'btn-warning' : 'btn-ghost hover:btn-warning'}`}
               onClick={() => onToggleFavorite(card.id)}
               title={isFavorite ? '取消收藏' : '加入收藏'}
             >
-              {isFavorite ? '★' : '☆'}
+              <span className="text-lg">{isFavorite ? '★' : '☆'}</span>
+            </button>
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              className={`btn min-h-9 h-9 px-4 text-sm ${
+                isOwned
+                  ? 'btn-outline btn-success hover:btn-success'
+                  : 'btn-accent hover:btn-accent-focus'
+              }`}
+              onClick={() => onToggleOwn(card.id)}
+            >
+              {isOwned ? '✓ 已擁有' : '+ 我有此卡'}
             </button>
           </div>
         </div>
@@ -211,12 +218,12 @@ export function CardItem({
                     )}
                   </div>
                   {benefit.referenceUrl && (
-                    <div className="mt-3">
+                    <div className="mt-3 flex justify-end">
                       <a
                         href={benefit.referenceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${
+                        className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md transition-colors ${
                           expired
                             ? 'bg-base-300/50 text-base-content/40 cursor-not-allowed'
                             : 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-focus'
@@ -225,9 +232,9 @@ export function CardItem({
                           expired ? (e) => e.preventDefault() : undefined
                         }
                       >
-                        <span>查看詳細活動頁面</span>
+                        <span>活動頁面</span>
                         <svg
-                          className="w-4 h-4"
+                          className="w-3 h-3"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
