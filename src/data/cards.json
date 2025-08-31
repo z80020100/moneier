@@ -1,0 +1,658 @@
+{
+  "cards": [
+    {
+      "id": "hsbc-diamond",
+      "bank": "滙豐銀行",
+      "name": "匯鑽卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 3,
+          "maxRate": 6,
+          "conditions": [
+            {
+              "id": "hsbc-account",
+              "type": "other",
+              "description": "帳戶累積方案",
+              "required": false
+            }
+          ],
+          "monthlyLimit": 2000,
+          "notes": "foodpanda、Uber Eats享3%~6%回饋"
+        },
+        {
+          "category": "網購",
+          "baseRate": 3,
+          "maxRate": 6,
+          "conditions": [
+            {
+              "id": "hsbc-account-2",
+              "type": "other",
+              "description": "總資產達30萬以上",
+              "required": false
+            }
+          ],
+          "notes": "各大網購平台3%~6%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ubot-line",
+      "bank": "聯邦銀行",
+      "name": "賴點卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 11.3,
+          "conditions": [
+            {
+              "id": "ubot-quota",
+              "type": "registration",
+              "description": "需搶到名額",
+              "required": true
+            }
+          ],
+          "validTo": "2025-12-31",
+          "notes": "最高11.3%回饋（需搶名額）"
+        },
+        {
+          "category": "超商",
+          "baseRate": 5,
+          "maxRate": 6.3,
+          "conditions": [],
+          "notes": "萊爾富現折5%，LINE POINTS 1%無上限"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ubot-delivery",
+      "bank": "聯邦銀行",
+      "name": "吉鶴卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "ubot-register",
+              "type": "registration",
+              "description": "登錄活動",
+              "required": true
+            },
+            {
+              "id": "ubot-min",
+              "type": "min_amount",
+              "description": "當月累積滿1,500元",
+              "required": true,
+              "value": 1500
+            }
+          ],
+          "monthlyLimit": 200,
+          "validFrom": "2025-01-01",
+          "validTo": "2025-06-30",
+          "notes": "每月限量5,000名"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "taishin-gogo",
+      "bank": "台新銀行",
+      "name": "@GoGo卡（黑狗卡）",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 9,
+          "conditions": [
+            {
+              "id": "taishin-coupon",
+              "type": "registration",
+              "description": "需先領取優惠券",
+              "required": true
+            },
+            {
+              "id": "taishin-payment",
+              "type": "payment_method",
+              "description": "搭配街口支付或台新Pay",
+              "required": true,
+              "value": "街口/台新Pay"
+            }
+          ],
+          "monthlyLimit": 200,
+          "validTo": "2025-12-31",
+          "notes": "三大外送平台享6%，最高200點"
+        },
+        {
+          "category": "加油",
+          "baseRate": 1,
+          "maxRate": 3.5,
+          "conditions": [],
+          "notes": "加油最高3.5%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ctbc-linepay",
+      "bank": "中國信託",
+      "name": "LINE Pay卡",
+      "benefits": [
+        {
+          "category": "餐飲",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "ctbc-registration",
+              "type": "registration",
+              "description": "需先登錄活動",
+              "required": true
+            },
+            {
+              "id": "ctbc-min-amount",
+              "type": "min_amount",
+              "description": "單筆消費滿666元",
+              "required": true,
+              "value": 666
+            }
+          ],
+          "monthlyLimit": 100,
+          "notes": "上限100元/月"
+        },
+        {
+          "category": "加油",
+          "baseRate": 5,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "ctbc-gas-self",
+              "type": "other",
+              "description": "全國加油站自助加油",
+              "required": true
+            }
+          ],
+          "notes": "全國加油站自助5% LINE Points無上限"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ctbc-foodpanda",
+      "bank": "中國信託",
+      "name": "foodpanda聯名卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 2,
+          "maxRate": 25,
+          "conditions": [
+            {
+              "id": "ctbc-fp-min",
+              "type": "min_amount",
+              "description": "單筆滿288元",
+              "required": true,
+              "value": 288
+            }
+          ],
+          "monthlyLimit": 200,
+          "validTo": "2025-09-30",
+          "notes": "foodpanda專屬最高25%或5%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "cathay-cube",
+      "bank": "國泰世華",
+      "name": "CUBE卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "cathay-switch",
+              "type": "other",
+              "description": "切換至「樂饗購」權益",
+              "required": true
+            }
+          ],
+          "validTo": "2025-12-31",
+          "notes": "外送3%無上限回饋"
+        },
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 2,
+          "conditions": [
+            {
+              "id": "cathay-super",
+              "type": "other",
+              "description": "選擇「集精選」權益",
+              "required": true
+            }
+          ],
+          "validTo": "2025-12-31",
+          "notes": "7-11實體卡最高2%小樹點無上限"
+        },
+        {
+          "category": "加油",
+          "baseRate": 2,
+          "maxRate": 2,
+          "conditions": [],
+          "notes": "中油直營店2%小樹點無上限"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "esun-ubear",
+      "bank": "玉山銀行",
+      "name": "U Bear卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "esun-new-user",
+              "type": "new_user",
+              "description": "新戶專享",
+              "required": true
+            }
+          ],
+          "monthlyLimit": 150,
+          "notes": "新戶外送平台享10%回饋"
+        },
+        {
+          "category": "網購",
+          "baseRate": 3,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "esun-web-new",
+              "type": "new_user",
+              "description": "新戶網購加碼7%",
+              "required": false
+            }
+          ],
+          "notes": "網購3%，新戶最高10%"
+        },
+        {
+          "category": "加油",
+          "baseRate": 1,
+          "maxRate": 13,
+          "conditions": [
+            {
+              "id": "esun-gas",
+              "type": "other",
+              "description": "中油加油",
+              "required": true
+            }
+          ],
+          "notes": "中油最高13%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "esun-unicard",
+      "bank": "玉山銀行",
+      "name": "Unicard",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 3.5,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "esun-up",
+              "type": "other",
+              "description": "訂閱UP選方案",
+              "required": false
+            },
+            {
+              "id": "esun-new",
+              "type": "new_user",
+              "description": "新戶加碼",
+              "required": false
+            }
+          ],
+          "validTo": "2025-09-30",
+          "notes": "任意選3.5%/Up選4.5%，新戶+1.5%"
+        },
+        {
+          "category": "網購",
+          "baseRate": 3,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "esun-web-up",
+              "type": "other",
+              "description": "訂閱UP選方案",
+              "required": false
+            }
+          ],
+          "notes": "多平台3%~5%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "sinopac-dawho",
+      "bank": "永豐銀行",
+      "name": "大戶卡",
+      "benefits": [
+        {
+          "category": "外送",
+          "baseRate": 1,
+          "maxRate": 7,
+          "conditions": [
+            {
+              "id": "sinopac-account",
+              "type": "other",
+              "description": "綁定永豐數位帳戶自動扣繳",
+              "required": true
+            },
+            {
+              "id": "sinopac-vip",
+              "type": "other",
+              "description": "大戶資格（月均財富10萬）",
+              "required": true
+            }
+          ],
+          "monthlyLimit": 6000,
+          "notes": "外送6,000元內享7%回饋"
+        },
+        {
+          "category": "交通",
+          "baseRate": 5,
+          "maxRate": 5,
+          "conditions": [],
+          "monthlyLimit": 300,
+          "validTo": "2025-06-30",
+          "notes": "悠遊卡自動加值5%（最高300元/月）"
+        },
+        {
+          "category": "加油",
+          "baseRate": 7,
+          "maxRate": 7,
+          "conditions": [
+            {
+              "id": "sinopac-carmaji",
+              "type": "other",
+              "description": "車麻吉app中油直營站",
+              "required": true
+            }
+          ],
+          "monthlyLimit": 300,
+          "notes": "車麻吉中油直營7%（最高300元/月）"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "sinopac-sport",
+      "bank": "永豐銀行",
+      "name": "Sport卡",
+      "benefits": [
+        {
+          "category": "網購",
+          "baseRate": 1,
+          "maxRate": 26,
+          "conditions": [
+            {
+              "id": "sinopac-new-task",
+              "type": "new_user",
+              "description": "新戶完成任務",
+              "required": true
+            }
+          ],
+          "notes": "新戶momo/蝦皮/PChome最高26%"
+        },
+        {
+          "category": "加油",
+          "baseRate": 1,
+          "maxRate": 26,
+          "conditions": [
+            {
+              "id": "sinopac-gas-new",
+              "type": "new_user",
+              "description": "新戶中油加油",
+              "required": true
+            }
+          ],
+          "notes": "中油最高26%回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "fubon-j",
+      "bank": "富邦銀行",
+      "name": "J卡",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "fubon-mobile",
+              "type": "payment_method",
+              "description": "綁定行動支付",
+              "required": true
+            }
+          ],
+          "notes": "7-11綁行動支付最高10%"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "fubon-momo",
+      "bank": "富邦銀行",
+      "name": "momo卡",
+      "benefits": [
+        {
+          "category": "網購",
+          "baseRate": 5,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "fubon-momo-only",
+              "type": "platform",
+              "description": "momo購物網",
+              "required": true,
+              "value": "momo"
+            }
+          ],
+          "validTo": "2025-12-31",
+          "notes": "momo專屬5% mo幣無上限"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "taishin-rose",
+      "bank": "台新銀行",
+      "name": "玫瑰卡",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-rose-pay",
+              "type": "payment_method",
+              "description": "台新Pay支付",
+              "required": true,
+              "value": "台新Pay"
+            }
+          ],
+          "monthlyLimit": 10000,
+          "validTo": "2025-12-31",
+          "notes": "7-11/全家台新Pay享3.3%"
+        },
+        {
+          "category": "加油",
+          "baseRate": 3.5,
+          "maxRate": 3.5,
+          "conditions": [],
+          "notes": "加油3.5%無門檻"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "taishin-richart",
+      "bank": "台新銀行",
+      "name": "Richart Life卡",
+      "benefits": [
+        {
+          "category": "網購",
+          "baseRate": 1,
+          "maxRate": 6,
+          "conditions": [
+            {
+              "id": "taishin-richart-app",
+              "type": "registration",
+              "description": "Richart Life APP領券",
+              "required": true
+            }
+          ],
+          "notes": "9大網購平台最高6%"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "firstbank-green",
+      "bank": "第一銀行",
+      "name": "Living Green綠活卡",
+      "benefits": [
+        {
+          "category": "交通",
+          "baseRate": 5,
+          "maxRate": 5,
+          "conditions": [],
+          "monthlyLimit": 50,
+          "validTo": "2025-06-30",
+          "notes": "悠遊卡/一卡通自動加值5%"
+        },
+        {
+          "category": "交通",
+          "baseRate": 5,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "firstbank-min",
+              "type": "min_amount",
+              "description": "當期一般消費滿1,000元",
+              "required": true,
+              "value": 1000
+            }
+          ],
+          "monthlyLimit": 200,
+          "validTo": "2025-12-31",
+          "notes": "高鐵/台鐵5%（需滿額）"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ctbc-agoda",
+      "bank": "中國信託",
+      "name": "Agoda聯名卡",
+      "benefits": [
+        {
+          "category": "交通",
+          "baseRate": 5,
+          "maxRate": 9,
+          "conditions": [],
+          "monthlyLimit": 500,
+          "notes": "高鐵/台鐵5% A金回饋"
+        },
+        {
+          "category": "旅遊",
+          "baseRate": 6,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "ctbc-agoda-site",
+              "type": "platform",
+              "description": "Agoda訂房",
+              "required": true,
+              "value": "Agoda"
+            }
+          ],
+          "notes": "Agoda訂房最高10%"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ubot-m",
+      "bank": "聯邦銀行",
+      "name": "幸福M卡",
+      "benefits": [
+        {
+          "category": "交通",
+          "baseRate": 6,
+          "maxRate": 6,
+          "conditions": [],
+          "monthlyLimit": 250,
+          "validTo": "2025-06-30",
+          "notes": "高鐵/台鐵6%現金回饋"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "cathay-formosa",
+      "bank": "國泰世華",
+      "name": "台塑聯名卡",
+      "benefits": [
+        {
+          "category": "加油",
+          "baseRate": 1,
+          "maxRate": 2.7,
+          "conditions": [
+            {
+              "id": "cathay-formosa-station",
+              "type": "platform",
+              "description": "台塑相關加油站",
+              "required": true,
+              "value": "台塑/台亞/福懋"
+            }
+          ],
+          "notes": "最高省2.7元/公升"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "hsbc-live",
+      "bank": "滙豐銀行",
+      "name": "Live+現金回饋卡",
+      "benefits": [
+        {
+          "category": "網購",
+          "baseRate": 4.88,
+          "maxRate": 4.88,
+          "conditions": [],
+          "notes": "網購4.88%現金積點回饋"
+        }
+      ],
+      "isActive": true
+    }
+  ]
+}

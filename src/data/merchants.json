@@ -1,0 +1,34 @@
+{
+  "餐飲": {
+    "keywords": ["餐飲", "星巴克", "麥當勞"],
+    "description": "實體餐廳用餐消費"
+  },
+  "外送": {
+    "keywords": ["外送", "Uber Eats", "foodpanda"],
+    "description": "外送平台訂餐服務"
+  },
+  "網購": {
+    "keywords": ["網購", "蝦皮", "PChome", "momo"],
+    "description": "網路購物平台消費"
+  },
+  "超商": {
+    "keywords": ["超商", "7-11", "全家", "萊爾富"],
+    "description": "便利商店消費"
+  },
+  "加油": {
+    "keywords": ["加油", "中油", "台塑"],
+    "description": "加油站消費"
+  },
+  "交通": {
+    "keywords": ["交通", "悠遊卡", "捷運", "Uber"],
+    "description": "大眾運輸及交通工具"
+  },
+  "娛樂": {
+    "keywords": ["娛樂", "Netflix", "電影"],
+    "description": "娛樂休閒消費"
+  },
+  "旅遊": {
+    "keywords": ["旅遊", "飯店", "機票"],
+    "description": "旅遊住宿相關消費"
+  }
+}
