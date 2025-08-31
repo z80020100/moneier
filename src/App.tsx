@@ -16,9 +16,6 @@ const merchantCategories: {
 } = merchantsData;
 
 // 統計資訊
-const activeCardsCount = allCards.filter(
-  (card) => card.isActive !== false
-).length;
 const totalBenefits = allCards.reduce(
   (sum, card) => sum + card.benefits.length,
   0
@@ -174,8 +171,8 @@ function App() {
               <span>共 {allCards.length} 張卡片</span>
             </div>
             <div className="badge badge-ghost gap-1 px-3 py-2">
-              <span>✅</span>
-              <span>{activeCardsCount} 張現行卡</span>
+              <span>👤</span>
+              <span>我的卡片 {myCards.length} 張</span>
             </div>
             <div className="badge badge-ghost gap-1 px-3 py-2">
               <span>🎁</span>
