@@ -161,7 +161,7 @@ export function CardItem({
                   >
                     {actualRate.toFixed(1)}% 回饋
                   </div>
-                  <div className="text-sm text-base-content/60">
+                  <div className="text-base sm:text-lg font-semibold text-base-content/80">
                     (最高 {benefit.maxRate}%)
                   </div>
                 </div>
@@ -181,8 +181,8 @@ export function CardItem({
                 </div>
               )}
 
-              {/* 條件進度條 - 只在有多個條件時顯示 */}
-              {hasMultipleConditions && !expired && (
+              {/* 條件進度條 */}
+              {benefit.conditions.length > 0 && !expired && (
                 <div className="mb-4">
                   <div className="flex justify-between items-center mb-2">
                     <div className="text-sm font-medium text-base-content/80">
