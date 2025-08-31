@@ -25,6 +25,7 @@ function App() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasSearched, setHasSearched] = useState(false);
+  const [showExpired, setShowExpired] = useState(false);
 
   // 卡片的模糊搜尋
   const cardFuse = useMemo(
@@ -158,6 +159,20 @@ function App() {
             <SearchBar onSearch={handleSearch} query={query} />
           </div>
 
+          {hasSearched && filteredCards.length > 0 && (
+            <div className="flex justify-end mb-4 px-4 sm:px-0">
+              <label className="label cursor-pointer gap-2">
+                <span className="label-text text-sm">顯示已過期活動</span>
+                <input
+                  type="checkbox"
+                  className="toggle toggle-sm"
+                  checked={showExpired}
+                  onChange={(e) => setShowExpired(e.target.checked)}
+                />
+              </label>
+            </div>
+          )}
+
           <CardList
             cards={filteredCards}
             category={activeCategory}
@@ -167,6 +182,7 @@ function App() {
             onToggleFavorite={handleToggleFavorite}
             isLoading={isLoading}
             hasSearched={hasSearched}
+            showExpired={showExpired}
           />
         </main>
 

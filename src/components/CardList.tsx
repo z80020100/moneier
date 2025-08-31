@@ -11,6 +11,7 @@ interface CardListProps {
   onToggleFavorite: (cardId: string) => void;
   isLoading?: boolean;
   hasSearched?: boolean;
+  showExpired?: boolean;
 }
 
 export function CardList({
@@ -22,6 +23,7 @@ export function CardList({
   onToggleFavorite,
   isLoading,
   hasSearched = false,
+  showExpired = false,
 }: CardListProps) {
   if (isLoading) {
     return (
@@ -122,6 +124,7 @@ export function CardList({
           isFavorite={favorites.includes(card.id)}
           onToggleOwn={onToggleOwn}
           onToggleFavorite={onToggleFavorite}
+          showExpired={showExpired}
         />
       ))}
     </div>

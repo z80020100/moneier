@@ -8,6 +8,7 @@ interface CardItemProps {
   isFavorite?: boolean;
   onToggleOwn: (cardId: string) => void;
   onToggleFavorite: (cardId: string) => void;
+  showExpired?: boolean;
 }
 
 export function CardItem({
@@ -17,14 +18,24 @@ export function CardItem({
   isFavorite,
   onToggleOwn,
   onToggleFavorite,
+  showExpired = false,
 }: CardItemProps) {
   const [conditionStatus, setConditionStatus] = useState<{
     [key: string]: boolean;
   }>({});
 
+  const isExpired = (benefit: Benefit) => {
+    if (!benefit.validTo) return false;
+    return new Date(benefit.validTo) < new Date();
+  };
+
   const relevantBenefits = category
     ? card.benefits.filter((benefit) => benefit.category === category)
     : card.benefits;
+
+  const filteredBenefits = showExpired
+    ? relevantBenefits
+    : relevantBenefits.filter((benefit) => !isExpired(benefit));
 
   const calculateActualRate = (benefit: Benefit) => {
     const requiredConditions = benefit.conditions.filter((c) => c.required);
@@ -95,12 +106,7 @@ export function CardItem({
     }));
   };
 
-  const isExpired = (benefit: Benefit) => {
-    if (!benefit.validTo) return false;
-    return new Date(benefit.validTo) < new Date();
-  };
-
-  if (relevantBenefits.length === 0) {
+  if (filteredBenefits.length === 0) {
     return null;
   }
 
@@ -140,7 +146,7 @@ export function CardItem({
           </div>
         </div>
 
-        {relevantBenefits.map((benefit, index) => {
+        {filteredBenefits.map((benefit, index) => {
           const actualRate = calculateActualRate(benefit);
           const expired = isExpired(benefit);
           const progress = getConditionProgress(benefit);
@@ -149,34 +155,60 @@ export function CardItem({
           return (
             <div
               key={index}
-              className="pb-6 mb-6 last:mb-0 last:pb-0 border-b border-base-300 last:border-b-0"
+              className={`pb-6 mb-6 last:mb-0 last:pb-0 border-b border-base-300 last:border-b-0 ${
+                expired
+                  ? 'relative bg-base-200/50 rounded-lg p-4 border-2 border-dashed border-base-300/60'
+                  : ''
+              }`}
             >
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
+              {expired && (
+                <div className="absolute -top-2 -right-2 bg-error text-error-content px-3 py-1 rounded-full text-xs font-bold shadow-lg z-10 rotate-12">
+                  ❌ 已過期
+                </div>
+              )}
+
+              <div
+                className={`flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2 ${expired ? 'opacity-60' : ''}`}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                  <span className="badge badge-lg badge-primary">
+                  <span
+                    className={`badge badge-lg ${expired ? 'badge-ghost' : 'badge-primary'}`}
+                  >
                     {benefit.category}
                   </span>
                   <div
-                    className={`text-2xl sm:text-3xl font-bold ${getRateColor(actualRate)} ${expired ? 'opacity-50' : ''}`}
+                    className={`text-2xl sm:text-3xl font-bold ${expired ? 'text-base-content/40 line-through' : getRateColor(actualRate)}`}
                   >
                     {actualRate.toFixed(1)}% 回饋
                   </div>
-                  <div className="text-base sm:text-lg font-semibold text-base-content/80">
+                  <div
+                    className={`text-base sm:text-lg font-semibold ${expired ? 'text-base-content/40' : 'text-base-content/80'}`}
+                  >
                     (最高 {benefit.maxRate}%)
                   </div>
                 </div>
-                {expired && (
-                  <div className="badge badge-error text-xs self-start sm:self-center">
-                    已過期
-                  </div>
-                )}
               </div>
 
               {/* 優惠說明 - 主要內容 */}
-              {benefit.notes && !expired && (
-                <div className="bg-gradient-to-r from-primary/15 to-primary/5 border-2 border-primary/50 rounded-2xl p-5 mb-6 shadow-sm">
-                  <div className="text-lg sm:text-xl text-base-content font-semibold leading-relaxed">
+              {benefit.notes && (
+                <div
+                  className={`${
+                    expired
+                      ? 'bg-base-300/30 border-2 border-base-300/50 opacity-50'
+                      : 'bg-gradient-to-r from-primary/15 to-primary/5 border-2 border-primary/50'
+                  } rounded-2xl p-5 mb-6 shadow-sm`}
+                >
+                  <div
+                    className={`text-lg sm:text-xl font-semibold leading-relaxed ${
+                      expired ? 'text-base-content/50' : 'text-base-content'
+                    }`}
+                  >
                     {benefit.notes}
+                    {expired && (
+                      <span className="ml-2 text-xs opacity-75">
+                        （此優惠已過期）
+                      </span>
+                    )}
                   </div>
                 </div>
               )}
@@ -250,13 +282,20 @@ export function CardItem({
               )}
 
               {benefit.conditions.length > 0 && (
-                <div className="bg-base-200 rounded-lg p-3 sm:p-4">
-                  <h4 className="font-medium mb-3 text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                    <span>達成條件:</span>
-                    {hasMultipleConditions && (
+                <div
+                  className={`${expired ? 'bg-base-300/30 opacity-50' : 'bg-base-200'} rounded-lg p-3 sm:p-4`}
+                >
+                  <h4
+                    className={`font-medium mb-3 text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 ${expired ? 'text-base-content/50' : ''}`}
+                  >
+                    <span>達成條件:{expired && ' （已過期）'}</span>
+                    {hasMultipleConditions && !expired && (
                       <div className="text-xs text-base-content/60">
                         勾選條件看實際回饋率
                       </div>
+                    )}
+                    {expired && (
+                      <div className="text-xs text-error/60">此活動已結束</div>
                     )}
                   </h4>
                   <div className="space-y-3">
@@ -265,10 +304,14 @@ export function CardItem({
                       return (
                         <label
                           key={condition.id}
-                          className={`flex items-start gap-3 cursor-pointer p-3 sm:p-4 rounded-lg transition-colors touch-manipulation ${
-                            isChecked
-                              ? 'bg-success/10 border border-success/30'
-                              : 'hover:bg-base-300/50 active:bg-base-300/70'
+                          className={`flex items-start gap-3 p-3 sm:p-4 rounded-lg transition-colors ${
+                            expired
+                              ? 'cursor-not-allowed opacity-60 bg-base-300/20'
+                              : `cursor-pointer touch-manipulation ${
+                                  isChecked
+                                    ? 'bg-success/10 border border-success/30'
+                                    : 'hover:bg-base-300/50 active:bg-base-300/70'
+                                }`
                           }`}
                         >
                           <input
