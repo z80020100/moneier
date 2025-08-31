@@ -23,6 +23,7 @@ export interface Benefit {
   validFrom?: string;
   validTo?: string;
   notes?: string;
+  referenceUrl?: string;
 }
 
 export interface CreditCard {
