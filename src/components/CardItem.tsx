@@ -118,7 +118,31 @@ export function CardItem({
             <div className="flex-1">
               <h2 className="card-title text-lg sm:text-xl mb-2">
                 <span className="text-base sm:text-lg">{card.bank}</span>
-                <span className="text-primary font-bold">{card.name}</span>
+                {card.officialUrl ? (
+                  <a
+                    href={card.officialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-bold hover:text-primary-focus transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>{card.name}</span>
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                ) : (
+                  <span className="text-primary font-bold">{card.name}</span>
+                )}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {isOwned && (
@@ -208,31 +232,30 @@ export function CardItem({
                   <div
                     className={`text-lg sm:text-xl font-semibold leading-relaxed ${
                       expired ? 'text-base-content/50' : 'text-base-content'
-                    }`}
+                    } flex items-center gap-2`}
                   >
-                    {benefit.notes}
-                    {expired && (
-                      <span className="ml-2 text-xs opacity-75">
-                        （此優惠已過期）
-                      </span>
-                    )}
-                  </div>
-                  {benefit.referenceUrl && (
-                    <div className="mt-3 flex justify-end">
+                    <span>
+                      {benefit.notes}
+                      {expired && (
+                        <span className="ml-2 text-xs opacity-75">
+                          （此優惠已過期）
+                        </span>
+                      )}
+                    </span>
+                    {benefit.referenceUrl && (
                       <a
                         href={benefit.referenceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md transition-colors ${
+                        className={`inline-flex items-center transition-colors ${
                           expired
-                            ? 'bg-base-300/50 text-base-content/40 cursor-not-allowed'
-                            : 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-focus'
+                            ? 'text-base-content/40 cursor-not-allowed'
+                            : 'text-primary hover:text-primary-focus'
                         }`}
                         onClick={
                           expired ? (e) => e.preventDefault() : undefined
                         }
                       >
-                        <span>活動頁面</span>
                         <svg
                           className="w-3 h-3"
                           fill="none"
@@ -247,8 +270,8 @@ export function CardItem({
                           />
                         </svg>
                       </a>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -367,8 +390,33 @@ export function CardItem({
                           />
                           <div className="flex-1 min-w-0">
                             <div className="text-sm sm:text-base flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-                              <span className="flex-1">
+                              <span className="flex-1 flex items-center gap-2">
                                 {condition.description}
+                                {condition.registrationUrl &&
+                                  condition.type === 'registration' &&
+                                  !expired && (
+                                    <a
+                                      href={condition.registrationUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center text-primary hover:text-primary-focus transition-colors"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <svg
+                                        className="w-3 h-3"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                                        />
+                                      </svg>
+                                    </a>
+                                  )}
                               </span>
                               {condition.required ? (
                                 <span className="badge badge-error badge-xs self-start">

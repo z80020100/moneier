@@ -12,6 +12,7 @@ export interface Condition {
   description: string;
   required: boolean;
   value?: string | number;
+  registrationUrl?: string;
 }
 
 export interface Benefit {
@@ -33,6 +34,7 @@ export interface CreditCard {
   benefits: Benefit[];
   notes?: string;
   isActive?: boolean;
+  officialUrl?: string;
 }
 
 export interface MerchantMapping {
