@@ -1,6 +1,6 @@
 import type { CreditCard } from '../types';
 import { CardItem } from './CardItem';
-import { SEARCH_PLACEHOLDER } from '../constants';
+import { SEARCH_HINT } from '../constants';
 
 interface CardListProps {
   cards: CreditCard[];
@@ -52,7 +52,7 @@ export function CardList({
             開始搜尋信用卡優惠
           </p>
           <p className="text-sm sm:text-base text-base-content/50 max-w-md mx-auto">
-            {SEARCH_PLACEHOLDER}
+            {SEARCH_HINT}
           </p>
         </div>
       );

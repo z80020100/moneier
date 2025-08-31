@@ -147,7 +147,10 @@ export function CardItem({
           const hasMultipleConditions = benefit.conditions.length > 1;
 
           return (
-            <div key={index} className="mb-6 last:mb-0">
+            <div
+              key={index}
+              className="pb-6 mb-6 last:mb-0 last:pb-0 border-b border-base-300 last:border-b-0"
+            >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 gap-2">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                   <span className="badge badge-lg badge-primary">
@@ -168,6 +171,15 @@ export function CardItem({
                   </div>
                 )}
               </div>
+
+              {/* 優惠說明 - 主要內容 */}
+              {benefit.notes && !expired && (
+                <div className="bg-gradient-to-r from-primary/15 to-primary/5 border-2 border-primary/50 rounded-2xl p-5 mb-6 shadow-sm">
+                  <div className="text-lg sm:text-xl text-base-content font-semibold leading-relaxed">
+                    {benefit.notes}
+                  </div>
+                </div>
+              )}
 
               {/* 條件進度條 - 只在有多個條件時顯示 */}
               {hasMultipleConditions && !expired && (
@@ -215,15 +227,25 @@ export function CardItem({
               )}
 
               {benefit.validTo && (
-                <div className="text-sm text-base-content/60 mb-3 p-2 bg-info/10 rounded">
-                  📅 活動期間: {benefit.validFrom || '即日起'} ~{' '}
-                  {benefit.validTo}
+                <div className="text-sm text-base-content/80 mb-3 p-3 bg-info/20 border border-info/30 rounded-lg">
+                  <div className="flex items-center gap-2 font-medium">
+                    📅 活動期間
+                    {expired && (
+                      <span className="badge badge-error badge-sm">已過期</span>
+                    )}
+                  </div>
+                  <div className="mt-1 text-base-content/70">
+                    {benefit.validFrom || '即日起'} ~ {benefit.validTo}
+                  </div>
                 </div>
               )}
 
               {benefit.monthlyLimit && (
-                <div className="text-sm text-base-content/60 mb-4 p-2 bg-warning/10 rounded">
-                  💰 每月上限: {benefit.monthlyLimit} 元
+                <div className="text-sm text-base-content/80 mb-4 p-3 bg-warning/20 border border-warning/30 rounded-lg">
+                  <div className="font-medium">💰 每月上限</div>
+                  <div className="mt-1 text-base-content/70">
+                    {benefit.monthlyLimit} 元
+                  </div>
                 </div>
               )}
 
@@ -288,12 +310,6 @@ export function CardItem({
                       );
                     })}
                   </div>
-                </div>
-              )}
-
-              {benefit.notes && (
-                <div className="text-sm text-base-content/70 mt-3">
-                  {benefit.notes}
                 </div>
               )}
             </div>
