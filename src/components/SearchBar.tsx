@@ -43,62 +43,79 @@ export function SearchBar({ onSearch, query }: SearchBarProps) {
 
   return (
     <div className="w-full flex flex-col items-center px-4 sm:px-0">
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-2xl lg:max-w-4xl">
         <form onSubmit={handleSubmit} className="form-control">
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-0">
-            <div className="flex-1 relative">
-              <input
-                type="text"
-                placeholder={SEARCH_PLACEHOLDER}
-                className={`input input-bordered w-full h-12 sm:h-14 text-base sm:text-lg pr-12 ${showError ? 'input-error' : ''}`}
-                value={inputValue}
-                onChange={handleInputChange}
-                autoComplete="off"
-                autoCapitalize="none"
-                spellCheck="false"
-              />
+          <div className="relative">
+            <input
+              type="text"
+              placeholder={SEARCH_PLACEHOLDER}
+              className={`input input-bordered input-lg w-full pr-32 text-base lg:text-lg shadow-lg focus:shadow-xl transition-all duration-200 ${showError ? 'input-error' : ''}`}
+              value={inputValue}
+              onChange={handleInputChange}
+              autoComplete="off"
+              autoCapitalize="none"
+              spellCheck="false"
+            />
+            <div className="absolute right-1 top-1 bottom-1 flex gap-1">
               {inputValue && (
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 btn btn-ghost btn-sm btn-circle"
+                  className="btn btn-ghost btn-circle"
                   onClick={handleClear}
                   title="清除搜尋"
                 >
                   ✕
                 </button>
               )}
+              <button type="submit" className="btn btn-primary px-6 lg:px-8">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 lg:mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <span className="hidden lg:inline">搜尋</span>
+              </button>
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary h-12 sm:h-14 px-6 sm:px-8 text-lg"
-            >
-              <span className="sm:hidden">🔍 搜尋</span>
-              <span className="hidden sm:inline">🔍</span>
-            </button>
           </div>
 
           {/* 錯誤提示 */}
           {showError && (
-            <div className="text-error text-sm mt-2 px-1">請輸入搜尋關鍵字</div>
+            <div className="text-error text-sm mt-2 px-1 animate-pulse">
+              請輸入搜尋關鍵字
+            </div>
           )}
         </form>
 
         {/* 快速搜尋按鈕 */}
         {!query && (
-          <div className="mt-6 flex flex-wrap gap-3 justify-center">
-            {QUICK_SEARCH_ITEMS.map((item) => (
-              <button
-                key={item}
-                className="btn btn-outline btn-sm sm:btn-md h-10 px-4 text-sm sm:text-base"
-                onClick={() => {
-                  setInputValue(item);
-                  setShowError(false);
-                  onSearch(item);
-                }}
-              >
-                {item}
-              </button>
-            ))}
+          <div className="mt-6">
+            <div className="text-sm text-base-content/60 text-center mb-3 hidden lg:block">
+              熱門搜尋
+            </div>
+            <div className="flex flex-wrap gap-2 lg:gap-3 justify-center">
+              {QUICK_SEARCH_ITEMS.map((item) => (
+                <button
+                  key={item}
+                  className="btn btn-outline btn-sm lg:btn-md hover:btn-primary transition-all duration-200 shadow-sm hover:shadow-md"
+                  onClick={() => {
+                    setInputValue(item);
+                    setShowError(false);
+                    onSearch(item);
+                  }}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -107,7 +107,9 @@ export function CardList({
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center text-sm text-base-content/70 px-4 sm:px-0 gap-2 sm:gap-0">
-        <span>找到 {cards.length} 張符合的信用卡</span>
+        <span className="text-base font-medium">
+          找到 {cards.length} 張符合的信用卡
+        </span>
         {myCards.length > 0 && (
           <span className="text-primary font-medium">
             我的卡片：{myCards.length} 張
@@ -115,18 +117,20 @@ export function CardList({
         )}
       </div>
 
-      {sortedCards.map((card) => (
-        <CardItem
-          key={card.id}
-          card={card}
-          category={category}
-          isOwned={myCards.includes(card.id)}
-          isFavorite={favorites.includes(card.id)}
-          onToggleOwn={onToggleOwn}
-          onToggleFavorite={onToggleFavorite}
-          showExpired={showExpired}
-        />
-      ))}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        {sortedCards.map((card) => (
+          <CardItem
+            key={card.id}
+            card={card}
+            category={category}
+            isOwned={myCards.includes(card.id)}
+            isFavorite={favorites.includes(card.id)}
+            onToggleOwn={onToggleOwn}
+            onToggleFavorite={onToggleFavorite}
+            showExpired={showExpired}
+          />
+        ))}
+      </div>
     </div>
   );
 }
