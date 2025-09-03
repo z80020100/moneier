@@ -1,0 +1,276 @@
+{
+  "payments": [
+    {
+      "id": "linepay-points",
+      "type": "payment",
+      "provider": "LINE Pay",
+      "name": "LINE Pay 點數回饋",
+      "officialUrl": "https://pay.line.me/tw",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "linepay-balance",
+              "type": "payment_method",
+              "description": "使用 LINE Pay 餘額支付",
+              "required": true,
+              "value": "LINE Pay 餘額"
+            }
+          ],
+          "notes": "7-11、全家使用 LINE Pay 餘額支付享 1% LINE Points，2025年特殊活動最高 5%",
+          "referenceUrl": "https://pay.line.me/tw/promotion"
+        },
+        {
+          "category": "餐飲",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "linepay-coupon",
+              "type": "other",
+              "description": "領取並使用 LINE Pay 優惠券",
+              "required": false
+            }
+          ],
+          "monthlyLimit": 300,
+          "notes": "指定餐廳使用 LINE Pay 付款，搭配優惠券最高 10% 回饋",
+          "referenceUrl": "https://pay.line.me/tw/promotion"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "icash-pay",
+      "type": "payment",
+      "provider": "iCash Pay",
+      "name": "愛金卡電子票證",
+      "officialUrl": "https://www.icash.com.tw",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 0.5,
+          "maxRate": 2,
+          "conditions": [
+            {
+              "id": "icash-card",
+              "type": "payment_method",
+              "description": "使用 iCash 2.0 卡片支付",
+              "required": true,
+              "value": "iCash 2.0"
+            }
+          ],
+          "notes": "7-11 使用 iCash 2.0 享 OPENPOINT 點數，特殊活動加碼最高 2%",
+          "referenceUrl": "https://www.icash.com.tw"
+        },
+        {
+          "category": "交通",
+          "baseRate": 0,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "icash-transport",
+              "type": "platform",
+              "description": "搭乘大眾運輸工具",
+              "required": true,
+              "value": "捷運/公車"
+            }
+          ],
+          "notes": "搭乘捷運、公車使用 iCash 支付，不定期優惠最高 10% 回饋",
+          "referenceUrl": "https://www.icash.com.tw"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "jkopay-wallet",
+      "type": "payment",
+      "provider": "街口支付",
+      "name": "街口支付儲值金",
+      "officialUrl": "https://www.jkopay.com",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "jko-stored",
+              "type": "payment_method",
+              "description": "使用街口儲值金支付",
+              "required": true,
+              "value": "街口儲值金"
+            }
+          ],
+          "notes": "便利商店使用街口儲值金支付享 1% 街口幣，活動期間最高 5%",
+          "referenceUrl": "https://www.jkopay.com"
+        },
+        {
+          "category": "外送",
+          "baseRate": 2,
+          "maxRate": 8,
+          "conditions": [
+            {
+              "id": "jko-delivery",
+              "type": "platform",
+              "description": "透過街口 App 訂餐",
+              "required": true,
+              "value": "街口訂餐"
+            }
+          ],
+          "monthlyLimit": 500,
+          "notes": "街口訂餐功能享 2% 基本回饋，新用戶最高 8%",
+          "referenceUrl": "https://www.jkopay.com"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "easycard",
+      "type": "payment",
+      "provider": "悠遊卡",
+      "name": "悠遊卡",
+      "officialUrl": "https://www.easycard.com.tw",
+      "benefits": [
+        {
+          "category": "交通",
+          "baseRate": 0,
+          "maxRate": 20,
+          "conditions": [
+            {
+              "id": "easy-transport",
+              "type": "platform",
+              "description": "搭乘大眾運輸",
+              "required": true,
+              "value": "捷運/公車"
+            }
+          ],
+          "notes": "捷運轉乘公車優惠、1280定期票等優惠方案",
+          "referenceUrl": "https://www.easycard.com.tw"
+        },
+        {
+          "category": "超商",
+          "baseRate": 0,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "easy-store",
+              "type": "other",
+              "description": "特約商店消費",
+              "required": true
+            }
+          ],
+          "notes": "特約商店不定期回饋活動",
+          "referenceUrl": "https://www.easycard.com.tw"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ipass",
+      "type": "payment",
+      "provider": "一卡通",
+      "name": "一卡通",
+      "officialUrl": "https://www.i-pass.com.tw",
+      "benefits": [
+        {
+          "category": "交通",
+          "baseRate": 0,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "ipass-transport",
+              "type": "platform",
+              "description": "高雄捷運/輕軌轉乘優惠",
+              "required": true,
+              "value": "高捷/輕軌"
+            }
+          ],
+          "notes": "2024年11月1日起取消電子票証85折優惠，但保留轉乘YouBike優惠5元",
+          "referenceUrl": "https://www.i-pass.com.tw"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "pi-wallet",
+      "type": "payment",
+      "provider": "Pi 拍錢包",
+      "name": "Pi 拍錢包",
+      "officialUrl": "https://www.piwallet.com",
+      "benefits": [
+        {
+          "category": "網購",
+          "baseRate": 1,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "pi-pchome",
+              "type": "platform",
+              "description": "PChome 購物及慶點付通路",
+              "required": true,
+              "value": "PChome/慶點付"
+            }
+          ],
+          "notes": "2025年調整：回饋P幣180天有效，1P幣=1元，38萬店點可用",
+          "referenceUrl": "https://www.piwallet.com"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "ezpay",
+      "type": "payment",
+      "provider": "全盈+PAY",
+      "name": "全盈+PAY",
+      "officialUrl": "https://www.ezpay.com.tw",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 0.5,
+          "maxRate": 6.7,
+          "conditions": [
+            {
+              "id": "ezpay-px",
+              "type": "platform",
+              "description": "全聯福利中心",
+              "required": true,
+              "value": "全聯"
+            }
+          ],
+          "notes": "2025年全聯使用全盈+PAY/全支付享福利點數加碼，最高6.7%回饋",
+          "referenceUrl": "https://www.pxmart.com.tw"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "familypay",
+      "type": "payment",
+      "provider": "全家 FamiPay",
+      "name": "FamiPay",
+      "officialUrl": "https://www.family.com.tw",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "fami-store",
+              "type": "platform",
+              "description": "全家便利商店",
+              "required": true,
+              "value": "全家"
+            }
+          ],
+          "notes": "全家店內消費享購物金回饋，會員日最高 10%",
+          "referenceUrl": "https://www.family.com.tw/Marketing/RightNow"
+        }
+      ],
+      "isActive": true
+    }
+  ]
+}
