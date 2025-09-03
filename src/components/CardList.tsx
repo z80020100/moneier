@@ -51,7 +51,7 @@ export function CardList({
         <div className="text-center py-12 sm:py-16 px-6">
           <div className="text-5xl sm:text-6xl mb-6">💳</div>
           <p className="text-xl sm:text-2xl text-base-content/70 font-medium mb-3">
-            開始搜尋信用卡優惠
+            探索最適合你的支付優惠
           </p>
           <p className="text-sm sm:text-base text-base-content/50 max-w-md mx-auto">
             {SEARCH_HINT}
@@ -64,10 +64,10 @@ export function CardList({
         <div className="text-center py-12 sm:py-16 px-6">
           <div className="text-5xl sm:text-6xl mb-6">🔍</div>
           <p className="text-xl sm:text-2xl text-base-content/70 font-medium mb-3">
-            沒有找到相關的信用卡
+            沒有找到相關的支付優惠
           </p>
           <p className="text-sm sm:text-base text-base-content/50 max-w-md mx-auto">
-            試試搜尋「Uber Eats」或「外送」
+            試試搜尋「台新」、「CUBE卡」、「LINE Pay」、「網購」或「7-11」
           </p>
         </div>
       );
@@ -106,18 +106,7 @@ export function CardList({
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center text-sm text-base-content/70 px-4 sm:px-0 gap-2 sm:gap-0">
-        <span className="text-base font-medium">
-          找到 {cards.length} 張符合的信用卡
-        </span>
-        {myCards.length > 0 && (
-          <span className="text-primary font-medium">
-            我的卡片：{myCards.length} 張
-          </span>
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {sortedCards.map((card) => (
           <CardItem
             key={card.id}

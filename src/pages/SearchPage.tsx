@@ -5,8 +5,20 @@ import { CardList } from '../components/CardList';
 import type { CreditCard } from '../types';
 import cardsData from '../data/cards.json';
 import merchantsData from '../data/merchants.json';
+import paymentsData from '../data/payments.json';
 
 const allCards: CreditCard[] = cardsData.cards as CreditCard[];
+const allPayments: CreditCard[] = paymentsData.payments.map((payment) => {
+  // 判斷是行動支付還是電子票證
+  const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  return {
+    ...payment,
+    bank: payment.provider,
+    isPayment: true,
+    paymentType: isETicket ? 'eticket' : 'mobile',
+  };
+}) as CreditCard[];
+const allItems: CreditCard[] = [...allCards, ...allPayments];
 const merchantCategories: {
   [category: string]: { keywords: string[]; description: string };
 } = merchantsData;
@@ -33,11 +45,11 @@ export function SearchPage({
   const [hasSearched, setHasSearched] = useState(false);
   const [showExpired, setShowExpired] = useState(false);
 
-  // 卡片的模糊搜尋
+  // 卡片和電子支付的模糊搜尋
   const cardFuse = useMemo(
     () =>
-      new Fuse(allCards, {
-        keys: ['name', 'bank'],
+      new Fuse(allItems, {
+        keys: ['name', 'bank', 'provider'],
         threshold: 0.4,
       }),
     []
@@ -73,35 +85,37 @@ export function SearchPage({
       const uniqueCards = new Map<string, CreditCard>();
       let detectedCategory: string | undefined;
 
-      // 1. 搜尋商家/類別名稱
+      // 1. 先搜尋卡片名稱和銀行（優先）
+      const cardResults = cardFuse.search(searchTerm);
+      const hasDirectMatch = cardResults.length > 0;
+
+      cardResults.forEach((result) => {
+        uniqueCards.set(result.item.id, result.item);
+      });
+
+      // 2. 搜尋商家/類別名稱（只有在沒有直接匹配時才設定 activeCategory）
       const merchantResults = merchantFuse.search(searchTerm);
       const matchedCategories = new Set<string>();
 
       merchantResults.forEach((result) => {
         const category = result.item.category;
         matchedCategories.add(category);
-        if (!detectedCategory) {
+        if (!detectedCategory && !hasDirectMatch) {
           detectedCategory = category;
         }
       });
 
-      // 根據匹配的類別篩選卡片
+      // 根據匹配的類別篩選卡片和電子支付
       if (matchedCategories.size > 0) {
-        allCards.forEach((card) => {
-          const hasMatchingBenefit = card.benefits.some((benefit) =>
+        allItems.forEach((item) => {
+          const hasMatchingBenefit = item.benefits.some((benefit) =>
             Array.from(matchedCategories).includes(benefit.category)
           );
           if (hasMatchingBenefit) {
-            uniqueCards.set(card.id, card);
+            uniqueCards.set(item.id, item);
           }
         });
       }
-
-      // 2. 搜尋卡片名稱和銀行
-      const cardResults = cardFuse.search(searchTerm);
-      cardResults.forEach((result) => {
-        uniqueCards.set(result.item.id, result.item);
-      });
 
       // 如果完全沒有結果，嘗試完全匹配類別名稱
       if (uniqueCards.size === 0) {
@@ -110,12 +124,12 @@ export function SearchPage({
         categories.forEach((category) => {
           // 只做完全匹配，避免「銀行」匹配到「餐飲」
           if (category === searchTerm) {
-            allCards.forEach((card) => {
-              const hasCategory = card.benefits.some(
+            allItems.forEach((item) => {
+              const hasCategory = item.benefits.some(
                 (benefit) => benefit.category === category
               );
               if (hasCategory) {
-                uniqueCards.set(card.id, card);
+                uniqueCards.set(item.id, item);
                 detectedCategory = category;
               }
             });

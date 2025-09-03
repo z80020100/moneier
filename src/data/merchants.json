@@ -12,7 +12,7 @@
     "description": "網路購物平台消費"
   },
   "超商": {
-    "keywords": ["超商", "7-11", "全家", "萊爾富"],
+    "keywords": ["超商", "7-11", "全家", "萊爾富", "OK超商"],
     "description": "便利商店消費"
   },
   "加油": {
@@ -38,5 +38,13 @@
   "醫療": {
     "keywords": ["醫療", "藥妝", "屈臣氏", "康是美", "寶雅", "藥局"],
     "description": "保健藥妝及醫療用品相關消費"
+  },
+  "行動支付": {
+    "keywords": ["行動支付", "Apple Pay", "Google Pay", "LINE Pay", "街口支付", "Pi錢包", "台新Pay", "中油Pay", "全盈+PAY", "FamiPay"],
+    "description": "行動支付綁卡消費回饋"
+  },
+  "電子票證": {
+    "keywords": ["電子票證", "悠遊卡", "一卡通", "iCash", "愛金卡", "icash2.0"],
+    "description": "電子票證卡片支付"
   }
 }
