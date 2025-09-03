@@ -35,6 +35,9 @@ export interface CreditCard {
   notes?: string;
   isActive?: boolean;
   officialUrl?: string;
+  previousNames?: string[];
+  isPayment?: boolean;
+  paymentType?: 'mobile' | 'eticket';
 }
 
 export interface MerchantMapping {
