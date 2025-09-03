@@ -2,8 +2,20 @@ import { useState, useMemo } from 'react';
 import { CardList } from '../components/CardList';
 import type { CreditCard } from '../types';
 import cardsData from '../data/cards.json';
+import paymentsData from '../data/payments.json';
 
 const allCards: CreditCard[] = cardsData.cards as CreditCard[];
+const allPayments: CreditCard[] = paymentsData.payments.map((payment) => {
+  // 判斷是行動支付還是電子票證
+  const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  return {
+    ...payment,
+    bank: payment.provider,
+    isPayment: true,
+    paymentType: isETicket ? 'eticket' : 'mobile',
+  };
+}) as CreditCard[];
+const allItems: CreditCard[] = [...allCards, ...allPayments];
 
 interface MyCardsPageProps {
   myCards: string[];
@@ -23,21 +35,21 @@ export function MyCardsPage({
   );
   const [showExpired, setShowExpired] = useState(false);
 
-  // 篩選我的卡片
+  // 篩選我的優惠工具
   const filteredCards = useMemo(() => {
     let cards: CreditCard[] = [];
 
     switch (viewMode) {
       case 'owned':
-        cards = allCards.filter((card) => myCards.includes(card.id));
+        cards = allItems.filter((item) => myCards.includes(item.id));
         break;
       case 'favorites':
-        cards = allCards.filter((card) => favorites.includes(card.id));
+        cards = allItems.filter((item) => favorites.includes(item.id));
         break;
       case 'all':
-        // 顯示所有擁有或收藏的卡片（聯集）
-        cards = allCards.filter(
-          (card) => myCards.includes(card.id) || favorites.includes(card.id)
+        // 顯示所有擁有或收藏的工具（聯集）
+        cards = allItems.filter(
+          (item) => myCards.includes(item.id) || favorites.includes(item.id)
         );
         break;
     }
@@ -73,7 +85,7 @@ export function MyCardsPage({
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary mb-4 flex items-center gap-2">
           <span>👤</span>
-          <span>我的卡片</span>
+          <span>我的錢包</span>
         </h1>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
@@ -87,9 +99,9 @@ export function MyCardsPage({
                 <span>📊</span>
                 全部 (
                 {
-                  allCards.filter(
-                    (card) =>
-                      myCards.includes(card.id) || favorites.includes(card.id)
+                  allItems.filter(
+                    (item) =>
+                      myCards.includes(item.id) || favorites.includes(item.id)
                   ).length
                 }
                 )
@@ -133,16 +145,16 @@ export function MyCardsPage({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <div className="card bg-base-100 shadow-xl">
             <div className="card-body">
-              <h2 className="card-title text-lg">卡片統計</h2>
+              <h2 className="card-title text-lg">錢包統計</h2>
               <div className="stat">
                 <div className="stat-title">目前檢視</div>
                 <div className="stat-value text-2xl text-primary">
-                  {filteredCards.length} 張
+                  {filteredCards.length} 項
                 </div>
                 <div className="stat-desc">
-                  {viewMode === 'all' && '所有我的卡片'}
-                  {viewMode === 'owned' && '已擁有的卡片'}
-                  {viewMode === 'favorites' && '已收藏的卡片'}
+                  {viewMode === 'all' && '錢包裡的所有項目'}
+                  {viewMode === 'owned' && '錢包裡已擁有的'}
+                  {viewMode === 'favorites' && '錢包裡已收藏的'}
                 </div>
               </div>
             </div>
