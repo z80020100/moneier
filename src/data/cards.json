@@ -4,7 +4,7 @@
       "id": "hsbc-diamond",
       "bank": "滙豐銀行",
       "name": "匯鑽卡",
-      "officialUrl": "https://www.hsbc.com.tw/en-tw/credit-cards/products/cashback-signature/",
+      "officialUrl": "https://www.hsbc.com.tw/credit-cards/products/cashback-titanium/",
       "benefits": [
         {
           "category": "外送",
@@ -36,6 +36,22 @@
           ],
           "notes": "各大網購平台3%~6%回饋",
           "referenceUrl": "https://www.hsbc.com.tw/en-tw/credit-cards/products/cashback-signature/"
+        },
+        {
+          "category": "行動支付",
+          "baseRate": 3,
+          "maxRate": 6,
+          "conditions": [
+            {
+              "id": "hsbc-mobile-pay",
+              "type": "payment_method",
+              "description": "綁定Apple Pay/Google Pay/LINE Pay/街口支付",
+              "required": true,
+              "value": "Apple Pay/Google Pay/LINE Pay/街口支付"
+            }
+          ],
+          "notes": "行動支付綁卡享3%~6%現金回饋",
+          "referenceUrl": "https://www.hsbc.com.tw/en-tw/credit-cards/products/cashback-signature/"
         }
       ],
       "isActive": true
@@ -44,32 +60,39 @@
       "id": "ubot-line",
       "bank": "聯邦銀行",
       "name": "賴點卡",
-      "officialUrl": "https://www.ubot.com.tw/wps/wcm/connect/Bank/UBot/Personal/PB_PRODUCT_CREDITCARD_LAIDIAN/PB_PRODUCT_CREDITCARD_LAIDIAN",
+      "officialUrl": "https://card.ubot.com.tw/CardDetail/cardDetail201",
       "benefits": [
         {
-          "category": "外送",
-          "baseRate": 1.3,
-          "maxRate": 6.3,
+          "category": "一般消費",
+          "baseRate": 1,
+          "maxRate": 3,
           "conditions": [
             {
-              "id": "ubot-linepay",
-              "type": "payment_method",
-              "description": "綁定LINE Pay於指定餐廳消費滿300元",
-              "required": true,
-              "value": 300
+              "id": "ubot-account",
+              "type": "other",
+              "description": "綁定聯邦帳戶自動扣繳",
+              "required": false
             }
           ],
-          "monthlyLimit": 150,
-          "validTo": "2025-12-31",
-          "notes": "指定餐廳LINE Pay消費滿300元享最高6.3%回饋（1.3%無上限+5%有上限）",
+          "notes": "國內1%無上限，國外2%無上限，綁定帳戶扣繳加碼0.3%",
           "referenceUrl": "https://activity.ubot.com.tw/2025LaiDianCard/index.htm"
         },
         {
-          "category": "超商",
-          "baseRate": 5,
-          "maxRate": 6.3,
-          "conditions": [],
-          "notes": "萊爾富現折5%，LINE POINTS 1%無上限",
+          "category": "行動支付",
+          "baseRate": 1,
+          "maxRate": 5,
+          "conditions": [
+            {
+              "id": "ubot-linepay-2025",
+              "type": "payment_method",
+              "description": "LINE Pay單筆滿100元於指定通路",
+              "required": true,
+              "value": 100
+            }
+          ],
+          "monthlyLimit": 150,
+          "validTo": "2024-12-31",
+          "notes": "LINE Pay指定通路單筆滿100元享5% LINE POINTS回饋",
           "referenceUrl": "https://activity.ubot.com.tw/2025LaiDianCard/index.htm"
         }
       ],
@@ -79,6 +102,7 @@
       "id": "ubot-delivery",
       "bank": "聯邦銀行",
       "name": "吉鶴卡",
+      "officialUrl": "https://card.ubot.com.tw/CardDetail/cardDetail202",
       "benefits": [
         {
           "category": "外送",
@@ -108,33 +132,159 @@
       "isActive": true
     },
     {
-      "id": "taishin-gogo",
+      "id": "taishin-richart",
       "bank": "台新銀行",
-      "name": "台新Richart卡（原@GoGo卡）",
+      "name": "台新Richart卡",
+      "officialUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card",
+      "previousNames": ["太陽卡/玫瑰卡", "@GoGo卡", "FlyGo卡", "玫瑰Giving卡", "大買家聯名卡"],
       "benefits": [
         {
-          "category": "外送",
-          "baseRate": 1,
+          "category": "行動支付",
+          "baseRate": 0.3,
           "maxRate": 3.8,
           "conditions": [
             {
-              "id": "taishin-switch-platform",
-              "type": "other",
-              "description": "使用切換刷平台「Pay著刷」方案",
+              "id": "taishin-pay-platform",
+              "type": "payment_method",
+              "description": "使用台新Pay並切換至「Pay著刷」方案",
               "required": true,
-              "value": "切換刷平台"
+              "value": "台新Pay"
+            },
+            {
+              "id": "taishin-account-auto",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
             }
           ],
-          "notes": "透過切換刷平台「Pay著刷」方案享最高3.8%回饋（需搭配台新Pay）",
-          "referenceUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/future/f7b68cfa-549d-11f0-b432-0050568c09e3"
+          "notes": "Pay著刷：台新Pay享3.8%無上限回饋（11萬家通路）",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
         },
         {
-          "category": "加油",
-          "baseRate": 1,
-          "maxRate": 3.5,
-          "conditions": [],
-          "notes": "加油最高3.5%回饋",
-          "referenceUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg003/card001/"
+          "category": "一般消費",
+          "baseRate": 0.3,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-daily-switch",
+              "type": "other",
+              "description": "切換至「天天刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-daily",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "天天刷：超商、交通、停車享3.3%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        },
+        {
+          "category": "餐飲",
+          "baseRate": 0.3,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-dining-switch",
+              "type": "other",
+              "description": "切換至「好饗刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-dining",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "好饗刷：餐飲、外送、加油、住宿、遊樂園享3.3%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        },
+        {
+          "category": "網購",
+          "baseRate": 0.3,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-online-switch",
+              "type": "other",
+              "description": "切換至「數趣刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-online",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "數趣刷：網購平台（蝦皮、momo、PChome等）享3.3%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        },
+        {
+          "category": "百貨",
+          "baseRate": 0.3,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-shopping-switch",
+              "type": "other",
+              "description": "切換至「大筆刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-shopping",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "大筆刷：百貨、outlet、居家修繕享3.3%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        },
+        {
+          "category": "旅遊",
+          "baseRate": 0.3,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "taishin-travel-switch",
+              "type": "other",
+              "description": "切換至「玩旅刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-travel",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "玩旅刷：海外消費、航空、訂房平台享3.3%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        },
+        {
+          "category": "假日消費",
+          "baseRate": 0.3,
+          "maxRate": 2,
+          "conditions": [
+            {
+              "id": "taishin-holiday-switch",
+              "type": "other",
+              "description": "切換至「假日刷」方案",
+              "required": true
+            },
+            {
+              "id": "taishin-account-holiday",
+              "type": "other",
+              "description": "綁定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "假日刷：國內假日消費享2%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
         }
       ],
       "isActive": true
@@ -143,29 +293,25 @@
       "id": "ctbc-linepay",
       "bank": "中國信託",
       "name": "LINE Pay卡",
+      "officialUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/LINEPay/index.html",
       "benefits": [
         {
           "category": "餐飲",
           "baseRate": 1,
-          "maxRate": 10,
+          "maxRate": 5,
           "conditions": [
             {
-              "id": "ctbc-registration",
+              "id": "ctbc-registration-2025",
               "type": "registration",
-              "description": "需先登錄活動",
+              "description": "需完成活動登錄（每月5號10:00開放）",
               "required": true,
               "registrationUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/LINEPay/index.html"
-            },
-            {
-              "id": "ctbc-min-amount",
-              "type": "min_amount",
-              "description": "單筆消費滿666元",
-              "required": true,
-              "value": 666
             }
           ],
-          "monthlyLimit": 100,
-          "notes": "上限100元/月",
+          "monthlyLimit": 10000,
+          "quarterlyLimit": 100,
+          "validTo": "2025-12-31",
+          "notes": "指定餐飲商店5%回饋（加碼4%+基本1%），每月限量登錄10,000名，每季每戶上限100點",
           "referenceUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/LINEPay/index.html"
         },
         {
@@ -221,42 +367,66 @@
       "benefits": [
         {
           "category": "外送",
-          "baseRate": 1,
-          "maxRate": 3.3,
+          "baseRate": 2,
+          "maxRate": 3.5,
           "conditions": [
             {
-              "id": "cathay-switch",
+              "id": "cathay-switch-2025",
               "type": "other",
-              "description": "切換至「樂饗購」權益",
+              "description": "切換至「樂饗購」權益，Level 2需自扣卡費",
               "required": true
             }
           ],
           "validTo": "2025-12-31",
-          "notes": "外送3%無上限回饋",
+          "notes": "外送平台2%-3.5%回饋（依等級），慶生月10%",
           "referenceUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube"
         },
         {
           "category": "超商",
-          "baseRate": 1,
-          "maxRate": 2,
+          "baseRate": 2,
+          "maxRate": 3,
           "conditions": [
             {
-              "id": "cathay-super",
+              "id": "cathay-super-2025",
               "type": "other",
-              "description": "選擇「集精選」權益",
+              "description": "選擇「集精選」權益，Level 2需自扣卡費",
               "required": true
             }
           ],
           "validTo": "2025-12-31",
-          "notes": "7-11實體卡最高2%小樹點無上限",
+          "notes": "7-11、全家2%-3%小樹點無上限（依等級）",
           "referenceUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube"
         },
         {
           "category": "加油",
           "baseRate": 2,
-          "maxRate": 2,
-          "conditions": [],
-          "notes": "中油直營店2%小樹點無上限",
+          "maxRate": 3,
+          "conditions": [
+            {
+              "id": "cathay-gas-2025",
+              "type": "other",
+              "description": "選擇「集精選」權益，Level 2需自扣卡費",
+              "required": true
+            }
+          ],
+          "notes": "中油直營店2%-3%小樹點無上限（依等級）",
+          "referenceUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube"
+        },
+        {
+          "category": "行動支付",
+          "baseRate": 1,
+          "maxRate": 3.3,
+          "conditions": [
+            {
+              "id": "cathay-linepay",
+              "type": "payment_method",
+              "description": "綁定LINE Pay支付",
+              "required": true,
+              "value": "LINE Pay"
+            }
+          ],
+          "validTo": "2025-12-31",
+          "notes": "LINE Pay綁卡消費享回饋（依選擇權益而定）",
           "referenceUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube"
         }
       ],
@@ -530,69 +700,10 @@
       "isActive": true
     },
     {
-      "id": "taishin-rose",
-      "bank": "台新銀行",
-      "name": "玫瑰卡",
-      "officialUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg040/card001/",
-      "benefits": [
-        {
-          "category": "超商",
-          "baseRate": 1,
-          "maxRate": 3.3,
-          "conditions": [
-            {
-              "id": "taishin-rose-pay",
-              "type": "payment_method",
-              "description": "台新Pay支付",
-              "required": true,
-              "value": "台新Pay"
-            }
-          ],
-          "monthlyLimit": 10000,
-          "validTo": "2025-12-31",
-          "notes": "7-11/全家台新Pay享3.3%",
-          "referenceUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/future/e2e1197f-9ff9-11ee-be9b-0050568c09e3"
-        },
-        {
-          "category": "加油",
-          "baseRate": 3.5,
-          "maxRate": 3.5,
-          "conditions": [],
-          "notes": "加油3.5%無門檻",
-          "referenceUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg040/card001/"
-        }
-      ],
-      "isActive": true
-    },
-    {
-      "id": "taishin-richart",
-      "bank": "台新銀行",
-      "name": "Richart Life卡",
-      "officialUrl": "https://richartlife.taishinbank.com.tw/",
-      "benefits": [
-        {
-          "category": "網購",
-          "baseRate": 1,
-          "maxRate": 6,
-          "conditions": [
-            {
-              "id": "taishin-richart-app",
-              "type": "registration",
-              "description": "Richart Life APP領券",
-              "required": true,
-              "registrationUrl": "https://richartlife.taishinbank.com.tw/"
-            }
-          ],
-          "notes": "9大網購平台最高6%",
-          "referenceUrl": "https://richartlife.taishinbank.com.tw/"
-        }
-      ],
-      "isActive": true
-    },
-    {
       "id": "firstbank-green",
       "bank": "第一銀行",
       "name": "Living Green綠活卡",
+      "officialUrl": "https://card.firstbank.com.tw/sites/card/zh_TW/1565690685690",
       "benefits": [
         {
           "category": "交通",
@@ -626,6 +737,7 @@
       "id": "ctbc-agoda",
       "bank": "中國信託",
       "name": "Agoda聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/AgodaCard/index.html",
       "benefits": [
         {
           "category": "交通",
@@ -659,6 +771,7 @@
       "id": "ubot-m",
       "bank": "聯邦銀行",
       "name": "幸福M卡",
+      "officialUrl": "https://card.ubot.com.tw/CardDetail/cardDetail203",
       "benefits": [
         {
           "category": "交通",
@@ -676,6 +789,7 @@
       "id": "cathay-formosa",
       "bank": "國泰世華",
       "name": "台塑聯名卡",
+      "officialUrl": "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/formosa/",
       "benefits": [
         {
           "category": "加油",
@@ -699,6 +813,7 @@
       "id": "hsbc-live",
       "bank": "滙豐銀行",
       "name": "Live+現金回饋卡",
+      "officialUrl": "https://www.hsbc.com.tw/en-tw/credit-cards/products/liveplus/",
       "benefits": [
         {
           "category": "網購",
@@ -714,6 +829,7 @@
       "id": "sc-linebank",
       "bank": "渣打銀行",
       "name": "LINE Bank 聯名卡",
+      "officialUrl": "https://www.sc.com/tw/credit-cards/linebank-coband-card/",
       "benefits": [
         {
           "category": "網購",
@@ -739,6 +855,7 @@
       "id": "dbs-eco",
       "bank": "星展銀行",
       "name": "eco永續卡",
+      "officialUrl": "https://www.dbs.com.tw/personal-zh/cards/dbs_eco/index.html",
       "benefits": [
         {
           "category": "旅遊",
@@ -772,6 +889,7 @@
       "id": "mega-lih-duo",
       "bank": "兆豐銀行",
       "name": "利多御璽卡",
+      "officialUrl": "https://www.megabank.com.tw/personal/credit-card/card/cash-rebate-biz",
       "benefits": [
         {
           "category": "網購",
@@ -787,6 +905,22 @@
             }
           ],
           "notes": "國內1%、國外2%回饋無上限。綁定行動支付享加碼，最高10%。"
+        },
+        {
+          "category": "行動支付",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "mega-mobile-pay",
+              "type": "payment_method",
+              "description": "Apple Pay/Google Pay/LINE Pay/街口支付",
+              "required": true,
+              "value": "Apple Pay/Google Pay/LINE Pay/街口支付"
+            }
+          ],
+          "notes": "行動支付綁卡最高10%回饋",
+          "referenceUrl": "https://www.megabank.com.tw/personal/credit-card/privilege/special-rewards"
         }
       ],
       "isActive": true
@@ -795,6 +929,7 @@
       "id": "cathay-eva-air",
       "bank": "國泰世華",
       "name": "長榮航空聯名卡",
+      "officialUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/eva",
       "benefits": [
         {
           "category": "旅遊",
@@ -811,6 +946,7 @@
       "id": "hsbc-traveler-signature",
       "bank": "滙豐銀行",
       "name": "旅人御璽卡",
+      "officialUrl": "https://www.hsbc.com.tw/en-tw/credit-cards/products/travelone-signature/",
       "benefits": [
         {
           "category": "旅遊",
@@ -827,6 +963,7 @@
       "id": "ctbc-china-airlines-infinite",
       "bank": "中國信託",
       "name": "中華航空聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/CTBCCI/index.html",
       "benefits": [
         {
           "category": "旅遊",
@@ -843,6 +980,7 @@
       "id": "ctbc-cpc",
       "bank": "中國信託",
       "name": "中油聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/CPC/index.html",
       "benefits": [
         {
           "category": "加油",
@@ -867,6 +1005,7 @@
       "id": "ctbc-pchome",
       "bank": "中國信託",
       "name": "PChome 聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/content/dam/minisite/long/creditcard/pchome/index.html",
       "benefits": [
         {
           "category": "網購",
@@ -891,6 +1030,7 @@
       "id": "cathay-shopee",
       "bank": "國泰世華",
       "name": "蝦皮聯名卡",
+      "officialUrl": "https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/shopee",
       "benefits": [
         {
           "category": "網購",
@@ -913,8 +1053,9 @@
     },
     {
       "id": "ubot-jko",
-      "bank": "聯邦銀行",
+      "bank": "台新銀行",
       "name": "街口聯名卡",
+      "officialUrl": "https://www.taishinbank.com.tw/TSB/personal/credit/intro/overview/cg038/card001/",
       "benefits": [
         {
           "category": "超商",
@@ -929,7 +1070,22 @@
               "value": "街口支付"
             }
           ],
-          "notes": "街口App綁定聯名卡在7-11/全家消費，享最高6%街口幣"
+          "notes": "街口App綁定聯名卡在7-11/全家消費，享最高6%街口幣。iCash綁卡享一般回饋"
+        },
+        {
+          "category": "行動支付",
+          "baseRate": 1,
+          "maxRate": 6,
+          "conditions": [
+            {
+              "id": "ubot-jko-icash",
+              "type": "payment_method",
+              "description": "iCash綁卡支付",
+              "required": true,
+              "value": "iCash"
+            }
+          ],
+          "notes": "iCash綁卡於7-11等統一集團通路消費，享優惠回饋"
         },
         {
           "category": "網購",
@@ -952,6 +1108,7 @@
       "id": "esun-pi-wallet",
       "bank": "玉山銀行",
       "name": "Pi 拍錢包信用卡",
+      "officialUrl": "https://www.piapp.com.tw/picard/",
       "benefits": [
         {
           "category": "網購",
@@ -989,6 +1146,7 @@
       "id": "ctbc-showtime",
       "bank": "中國信託",
       "name": "秀泰聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/content/twrbo/zh_tw/cc_index/cc_product/cc_introduction_index/C_SHOWTIME.html",
       "benefits": [
         {
           "category": "娛樂",
@@ -1012,6 +1170,7 @@
       "id": "fubon-costco",
       "bank": "富邦銀行",
       "name": "Costco聯名卡",
+      "officialUrl": "https://www.fubon.com/banking/personal/credit_card/all_card/costco/costco.htm",
       "benefits": [
         {
           "category": "量販",
@@ -1035,6 +1194,7 @@
       "id": "ctbc-uniopen",
       "bank": "中國信託",
       "name": "uniopen 聯名卡",
+      "officialUrl": "https://www.ctbcbank.com/twrbo/zh_tw/cc_index/cc_product/cc_introduction_index/C_uniopen.html",
       "benefits": [
         {
           "category": "超商",
@@ -1102,6 +1262,7 @@
       "id": "tbb-chaotiangong",
       "bank": "台灣企銀",
       "name": "北港朝天宮認同卡",
+      "officialUrl": "https://www.tbb.com.tw/web/guest/-288",
       "benefits": [
         {
           "category": "外送",
