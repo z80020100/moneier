@@ -53,7 +53,7 @@ export function Navbar() {
                 >
                   <span className="flex items-center gap-2">
                     <span>💳</span>
-                    所有卡片
+                    所有優惠
                   </span>
                 </NavLink>
               </li>
@@ -68,7 +68,7 @@ export function Navbar() {
                 >
                   <span className="flex items-center gap-2">
                     <span>👤</span>
-                    我的卡片
+                    我的錢包
                   </span>
                 </NavLink>
               </li>
@@ -88,7 +88,7 @@ export function Navbar() {
           </div>
 
           <div className="text-xs text-base-content/60 text-right">
-            優惠查詢
+            支付優惠
           </div>
         </div>
 
@@ -123,7 +123,7 @@ export function Navbar() {
                 >
                   <span className="flex items-center gap-2">
                     <span>💳</span>
-                    所有卡片
+                    所有優惠
                   </span>
                 </NavLink>
               </li>
@@ -138,7 +138,7 @@ export function Navbar() {
                 >
                   <span className="flex items-center gap-2">
                     <span>👤</span>
-                    我的卡片
+                    我的錢包
                   </span>
                 </NavLink>
               </li>
@@ -160,7 +160,7 @@ export function Navbar() {
           {/* Right side info */}
           <div className="flex-1 flex justify-end">
             <div className="text-sm text-base-content/60 font-medium">
-              優惠查詢
+              支付優惠查詢
             </div>
           </div>
         </div>

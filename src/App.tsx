@@ -6,13 +6,16 @@ import { AllCardsPage } from './pages/AllCardsPage';
 import { MyCardsPage } from './pages/MyCardsPage';
 import { storage } from './services/storage';
 import cardsData from './data/cards.json';
+import paymentsData from './data/payments.json';
 import './index.css';
 
 const allCards = cardsData.cards;
+const allPayments = paymentsData.payments;
+const allItems = [...allCards, ...allPayments];
 
 // 統計資訊
-const totalBenefits = allCards.reduce(
-  (sum, card) => sum + card.benefits.length,
+const totalBenefits = allItems.reduce(
+  (sum, item) => sum + item.benefits.length,
   0
 );
 const lastUpdateDate = new Date()
@@ -57,9 +60,9 @@ function App() {
                     <span className="text-lg lg:text-xl">💳</span>
                     <div className="text-center lg:text-left">
                       <div className="text-lg lg:text-xl font-bold text-primary">
-                        {allCards.length}
+                        {allItems.length}
                       </div>
-                      <div className="text-xs text-base-content/60">張卡片</div>
+                      <div className="text-xs text-base-content/60">項</div>
                     </div>
                   </div>
                 </div>
@@ -71,7 +74,7 @@ function App() {
                         {myCards.length}
                       </div>
                       <div className="text-xs text-base-content/60">
-                        我的卡片
+                        我的錢包
                       </div>
                     </div>
                   </div>
