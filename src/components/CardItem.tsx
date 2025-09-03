@@ -113,67 +113,169 @@ export function CardItem({
   return (
     <div className="card bg-base-100 shadow-lg sm:shadow-xl hover:shadow-xl sm:hover:shadow-2xl transition-shadow mx-2 sm:mx-0">
       <div className="card-body p-4 sm:p-6">
-        <div className="flex flex-col gap-3 mb-4">
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <h2 className="card-title text-lg sm:text-xl mb-2">
-                <span className="text-base sm:text-lg">{card.bank}</span>
-                {card.officialUrl ? (
-                  <a
-                    href={card.officialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary font-bold hover:text-primary-focus transition-colors inline-flex items-center gap-1"
-                  >
-                    <span>{card.name}</span>
-                    <svg
-                      className="w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
-                ) : (
-                  <span className="text-primary font-bold">{card.name}</span>
-                )}
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {isOwned && (
-                  <span className="badge badge-success text-xs">✓ 我的卡</span>
-                )}
-                {!card.isActive && (
-                  <span className="badge badge-ghost text-xs">停發</span>
-                )}
-              </div>
+        {/* Header區域：標題 + 按鈕的垂直佈局 */}
+        <div className="mb-4">
+          <h2 className="card-title text-lg sm:text-xl">
+            <span className="text-base sm:text-lg">
+              {!card.isPayment && (
+                <span className="badge badge-info badge-sm mr-1">信用卡</span>
+              )}
+              {card.isPayment && card.paymentType === 'mobile' && (
+                <span className="badge badge-secondary badge-sm mr-1">
+                  行動支付
+                </span>
+              )}
+              {card.isPayment && card.paymentType === 'eticket' && (
+                <span className="badge badge-accent badge-sm mr-1">
+                  電子票證
+                </span>
+              )}
+              {card.bank}
+            </span>
+            {card.officialUrl ? (
+              <a
+                href={card.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-bold hover:text-primary-focus transition-colors inline-flex items-center gap-1"
+              >
+                <span>{card.name}</span>
+                <svg
+                  className="w-3 h-3"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+              </a>
+            ) : (
+              <span className="text-primary font-bold">{card.name}</span>
+            )}
+          </h2>
+
+          {card.previousNames && card.previousNames.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1 mt-2 mb-2">
+              <svg
+                className="w-3 h-3 text-base-content/60"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              {card.previousNames.map((name, index) => (
+                <span
+                  key={index}
+                  className="badge badge-ghost badge-sm text-xs"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="flex justify-between items-center mt-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {!card.isActive && (
+                <span className="badge badge-ghost text-xs">停發</span>
+              )}
             </div>
 
-            <button
-              className={`btn btn-circle min-h-10 h-10 w-10 ml-3 ${isFavorite ? 'btn-warning' : 'btn-ghost hover:btn-warning'}`}
-              onClick={() => onToggleFavorite(card.id)}
-              title={isFavorite ? '取消收藏' : '加入收藏'}
-            >
-              <span className="text-lg">{isFavorite ? '★' : '☆'}</span>
-            </button>
-          </div>
+            {/* 按鈕區域在標題下方 */}
+            <div className="flex items-center gap-2">
+              <button
+                className={`btn btn-circle btn-sm min-h-8 h-8 w-8 transition-all duration-200 ${
+                  isOwned
+                    ? 'btn-success text-white hover:scale-110 shadow-md hover:shadow-lg'
+                    : 'btn-outline btn-success hover:btn-success hover:text-white hover:scale-110 hover:shadow-md'
+                }`}
+                onClick={() => onToggleOwn(card.id)}
+                title={
+                  isOwned
+                    ? card.isPayment
+                      ? '取消已安裝'
+                      : '取消已擁有'
+                    : card.isPayment
+                      ? '標記為已安裝'
+                      : '標記為已擁有'
+                }
+              >
+                {isOwned ? (
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1-1H9a1 1 0 00-1 1v3M4 7h16"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                )}
+              </button>
 
-          <div className="flex justify-end">
-            <button
-              className={`btn min-h-9 h-9 px-4 text-sm ${
-                isOwned
-                  ? 'btn-outline btn-success hover:btn-success'
-                  : 'btn-accent hover:btn-accent-focus'
-              }`}
-              onClick={() => onToggleOwn(card.id)}
-            >
-              {isOwned ? '✓ 已擁有' : '+ 我有此卡'}
-            </button>
+              <button
+                className={`btn btn-circle btn-sm min-h-8 h-8 w-8 transition-all duration-200 ${
+                  isFavorite
+                    ? 'btn-warning text-white hover:scale-110 shadow-md hover:shadow-lg'
+                    : 'btn-outline btn-warning hover:btn-warning hover:text-white hover:scale-110 hover:shadow-md'
+                }`}
+                onClick={() => onToggleFavorite(card.id)}
+                title={isFavorite ? '取消收藏' : '加入收藏'}
+              >
+                {isFavorite ? (
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -203,7 +305,7 @@ export function CardItem({
               >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                   <span
-                    className={`badge badge-lg ${expired ? 'badge-ghost' : 'badge-primary'}`}
+                    className={`badge ${expired ? 'badge-ghost' : 'badge-primary'} text-xs px-2 py-1`}
                   >
                     {benefit.category}
                   </span>
