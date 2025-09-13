@@ -4,15 +4,36 @@ import type { CreditCard } from '../types';
 import cardsData from '../data/cards.json';
 import paymentsData from '../data/payments.json';
 
-const allCards: CreditCard[] = cardsData.cards as CreditCard[];
+// 處理信用卡和簽帳金融卡
+const allCards: CreditCard[] = (cardsData.cards as CreditCard[]).map((card) => {
+  // 檢查是否為簽帳金融卡
+  const isDebitCard =
+    card.name.includes('金融卡') ||
+    card.name.includes('簽帳') ||
+    card.name.includes('VISA金融卡') ||
+    card.name.includes('debit') ||
+    card.officialUrl?.includes('visa-debit') ||
+    false;
+
+  return {
+    ...card,
+    isDebitCard,
+    cardType: isDebitCard ? 'debit' : 'credit',
+  };
+});
+
+// 處理行動支付和電子票證
 const allPayments: CreditCard[] = paymentsData.payments.map((payment) => {
   // 判斷是行動支付還是電子票證
   const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  const cardType = isETicket ? 'eticket' : 'mobile';
+
   return {
     ...payment,
     bank: payment.provider,
     isPayment: true,
     paymentType: isETicket ? 'eticket' : 'mobile',
+    cardType,
   };
 }) as CreditCard[];
 const allItems: CreditCard[] = [...allCards, ...allPayments];
@@ -33,6 +54,9 @@ export function MyCardsPage({
   const [viewMode, setViewMode] = useState<'owned' | 'favorites' | 'all'>(
     'all'
   );
+  const [cardType, setCardType] = useState<
+    'all' | 'credit' | 'debit' | 'mobile' | 'eticket'
+  >('all');
   const [showExpired, setShowExpired] = useState(false);
 
   // 篩選我的優惠工具
@@ -54,6 +78,11 @@ export function MyCardsPage({
         break;
     }
 
+    // 根據卡片類型篩選
+    if (cardType !== 'all') {
+      cards = cards.filter((card) => card.cardType === cardType);
+    }
+
     // 按銀行和名稱排序
     cards.sort((a, b) => {
       const bankCompare = a.bank.localeCompare(b.bank);
@@ -62,7 +91,7 @@ export function MyCardsPage({
     });
 
     return cards;
-  }, [myCards, favorites, viewMode]);
+  }, [myCards, favorites, viewMode, cardType]);
 
   // 計算各類別的優惠數量
   const categoryStats = useMemo(() => {
@@ -87,6 +116,62 @@ export function MyCardsPage({
           <span>👤</span>
           <span>我的錢包</span>
         </h1>
+
+        {/* 卡片類型選擇 */}
+        <div className="flex justify-center mb-4 overflow-x-auto">
+          <div className="flex bg-base-200 rounded-lg p-1 gap-1 min-w-fit">
+            <button
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                cardType === 'all'
+                  ? 'bg-primary text-primary-content shadow-sm'
+                  : 'text-base-content/70 hover:text-base-content'
+              }`}
+              onClick={() => setCardType('all')}
+            >
+              全部
+            </button>
+            <button
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                cardType === 'credit'
+                  ? 'bg-primary text-primary-content shadow-sm'
+                  : 'text-base-content/70 hover:text-base-content'
+              }`}
+              onClick={() => setCardType('credit')}
+            >
+              💳 信用卡
+            </button>
+            <button
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                cardType === 'debit'
+                  ? 'bg-primary text-primary-content shadow-sm'
+                  : 'text-base-content/70 hover:text-base-content'
+              }`}
+              onClick={() => setCardType('debit')}
+            >
+              🏛️ 簽帳金融卡
+            </button>
+            <button
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                cardType === 'mobile'
+                  ? 'bg-primary text-primary-content shadow-sm'
+                  : 'text-base-content/70 hover:text-base-content'
+              }`}
+              onClick={() => setCardType('mobile')}
+            >
+              📱 行動支付
+            </button>
+            <button
+              className={`px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                cardType === 'eticket'
+                  ? 'bg-primary text-primary-content shadow-sm'
+                  : 'text-base-content/70 hover:text-base-content'
+              }`}
+              onClick={() => setCardType('eticket')}
+            >
+              🎫 電子票證
+            </button>
+          </div>
+        </div>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-4">
           {/* 檢視模式 */}
@@ -210,11 +295,11 @@ export function MyCardsPage({
             </svg>
             <span>
               {viewMode === 'owned' &&
-                '您還沒有標記任何已擁有的卡片。在搜尋或瀏覽卡片時，點擊「+ 我有此卡」來加入您實際擁有的信用卡。'}
+                '👆 先將您擁有的支付工具加入收藏，系統將為您智慧匹配最優惠方案！'}
               {viewMode === 'favorites' &&
-                '您還沒有收藏任何卡片。在搜尋或瀏覽卡片時，點擊星星圖示（⭐）來收藏感興趣的信用卡。'}
+                '⭐ 收藏感興趣的支付工具，方便隨時比較回饋率和優惠條件！'}
               {viewMode === 'all' &&
-                '您還沒有任何卡片。開始搜尋並加入您擁有或感興趣的信用卡吧！'}
+                '🚀 開始建立您的智慧錢包，找到最適合的支付優惠！'}
             </span>
           </div>
         )}

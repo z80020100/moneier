@@ -38,6 +38,8 @@ export interface CreditCard {
   previousNames?: string[];
   isPayment?: boolean;
   paymentType?: 'mobile' | 'eticket';
+  isDebitCard?: boolean; // 新增：標識簽帳金融卡
+  cardType?: 'credit' | 'debit' | 'mobile' | 'eticket'; // 新增：統一的卡片類型
 }
 
 export interface MerchantMapping {

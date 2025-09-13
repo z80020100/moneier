@@ -4,15 +4,36 @@ import type { CreditCard } from '../types';
 import cardsData from '../data/cards.json';
 import paymentsData from '../data/payments.json';
 
-const allCards: CreditCard[] = cardsData.cards as CreditCard[];
+// 處理信用卡和簽帳金融卡
+const allCards: CreditCard[] = (cardsData.cards as CreditCard[]).map((card) => {
+  // 檢查是否為簽帳金融卡
+  const isDebitCard =
+    card.name.includes('金融卡') ||
+    card.name.includes('簽帳') ||
+    card.name.includes('VISA金融卡') ||
+    card.name.includes('debit') ||
+    card.officialUrl?.includes('visa-debit') ||
+    false;
+
+  return {
+    ...card,
+    isDebitCard,
+    cardType: isDebitCard ? 'debit' : 'credit',
+  };
+});
+
+// 處理行動支付和電子票證
 const allPayments: CreditCard[] = paymentsData.payments.map((payment) => {
   // 判斷是行動支付還是電子票證
   const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  const cardType = isETicket ? 'eticket' : 'mobile';
+
   return {
     ...payment,
     bank: payment.provider,
     isPayment: true,
     paymentType: isETicket ? 'eticket' : 'mobile',
+    cardType,
   };
 }) as CreditCard[];
 const allItems: CreditCard[] = [...allCards, ...allPayments];
@@ -31,9 +52,9 @@ export function AllCardsPage({
   onToggleFavorite,
 }: AllCardsPageProps) {
   const [selectedTypes, setSelectedTypes] = useState<
-    Set<'credit' | 'mobile' | 'eticket'>
+    Set<'credit' | 'debit' | 'mobile' | 'eticket'>
   >(
-    new Set(['credit', 'mobile', 'eticket']) // 預設全選
+    new Set(['credit', 'debit', 'mobile', 'eticket']) // 預設全選
   );
   const [selectedBank, setSelectedBank] = useState<string>('');
   const [showExpired, setShowExpired] = useState(false);
@@ -50,20 +71,10 @@ export function AllCardsPage({
     let cards = [...allItems];
 
     // 第一層：種類篩選（多選）
-    if (selectedTypes.size > 0 && selectedTypes.size < 3) {
+    if (selectedTypes.size > 0 && selectedTypes.size < 4) {
       // 如果不是全選
       cards = cards.filter((card) => {
-        if (!card.isPayment) {
-          // 信用卡
-          return selectedTypes.has('credit');
-        } else if (card.paymentType === 'mobile') {
-          // 行動支付
-          return selectedTypes.has('mobile');
-        } else if (card.paymentType === 'eticket') {
-          // 電子票證
-          return selectedTypes.has('eticket');
-        }
-        return false;
+        return selectedTypes.has(card.cardType || 'credit');
       });
     }
 
@@ -115,15 +126,17 @@ export function AllCardsPage({
         <div className="flex flex-wrap gap-2 mb-4">
           <button
             className={`btn btn-sm sm:btn-md transition-all duration-200 ${
-              selectedTypes.size === 3
+              selectedTypes.size === 4
                 ? 'btn-primary hover:btn-primary hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
                 : 'btn-outline btn-primary hover:btn-outline hover:border-primary hover:text-primary hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
             }`}
             onClick={() => {
-              if (selectedTypes.size === 3) {
+              if (selectedTypes.size === 4) {
                 setSelectedTypes(new Set()); // 清空
               } else {
-                setSelectedTypes(new Set(['credit', 'mobile', 'eticket'])); // 全選
+                setSelectedTypes(
+                  new Set(['credit', 'debit', 'mobile', 'eticket'])
+                ); // 全選
               }
               setSelectedBank(''); // 清除銀行篩選
             }}
@@ -157,7 +170,31 @@ export function AllCardsPage({
               <span className="text-base sm:text-lg">💳</span>
               <span>信用卡</span>
               <span className="badge badge-neutral badge-xs sm:badge-sm">
-                {allCards.length}
+                {allCards.filter((card) => card.cardType === 'credit').length}
+              </span>
+            </span>
+          </button>
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.has('debit')
+                ? 'btn-warning hover:btn-warning hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-warning hover:btn-outline hover:border-warning hover:text-warning hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              const newTypes = new Set(selectedTypes);
+              if (selectedTypes.has('debit')) {
+                newTypes.delete('debit');
+              } else {
+                newTypes.add('debit');
+              }
+              setSelectedTypes(newTypes);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">🏛️</span>
+              <span>簽帳金融卡</span>
+              <span className="badge badge-neutral badge-xs sm:badge-sm">
+                {allCards.filter((card) => card.cardType === 'debit').length}
               </span>
             </span>
           </button>
@@ -230,8 +267,8 @@ export function AllCardsPage({
               <option value="rate">最高回饋率</option>
             </select>
 
-            {/* 銀行篩選（只有包含信用卡時才顯示） */}
-            {selectedTypes.has('credit') && (
+            {/* 銀行篩選（只有包含信用卡或簽帳金融卡時才顯示） */}
+            {(selectedTypes.has('credit') || selectedTypes.has('debit')) && (
               <select
                 className="select select-bordered select-sm flex-1 sm:flex-initial sm:w-48"
                 value={selectedBank}

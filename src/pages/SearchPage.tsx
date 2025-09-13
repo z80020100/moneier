@@ -7,15 +7,36 @@ import cardsData from '../data/cards.json';
 import merchantsData from '../data/merchants.json';
 import paymentsData from '../data/payments.json';
 
-const allCards: CreditCard[] = cardsData.cards as CreditCard[];
+// 處理信用卡和簽帳金融卡
+const allCards: CreditCard[] = (cardsData.cards as CreditCard[]).map((card) => {
+  // 檢查是否為簽帳金融卡
+  const isDebitCard =
+    card.name.includes('金融卡') ||
+    card.name.includes('簽帳') ||
+    card.name.includes('VISA金融卡') ||
+    card.name.includes('debit') ||
+    card.officialUrl?.includes('visa-debit') ||
+    false;
+
+  return {
+    ...card,
+    isDebitCard,
+    cardType: isDebitCard ? 'debit' : 'credit',
+  };
+});
+
+// 處理行動支付和電子票證
 const allPayments: CreditCard[] = paymentsData.payments.map((payment) => {
   // 判斷是行動支付還是電子票證
   const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  const cardType = isETicket ? 'eticket' : 'mobile';
+
   return {
     ...payment,
     bank: payment.provider,
     isPayment: true,
     paymentType: isETicket ? 'eticket' : 'mobile',
+    cardType,
   };
 }) as CreditCard[];
 const allItems: CreditCard[] = [...allCards, ...allPayments];
@@ -44,6 +65,9 @@ export function SearchPage({
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [showExpired, setShowExpired] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState<
+    Set<'credit' | 'debit' | 'mobile' | 'eticket'>
+  >(new Set(['credit', 'debit', 'mobile', 'eticket'])); // 預設全選
 
   // 卡片和電子支付的模糊搜尋
   const cardFuse = useMemo(
@@ -137,7 +161,17 @@ export function SearchPage({
         });
       }
 
-      setFilteredCards(Array.from(uniqueCards.values()));
+      let finalCards = Array.from(uniqueCards.values());
+
+      // 根據選擇的類型篩選（多選）
+      if (selectedTypes.size > 0 && selectedTypes.size < 4) {
+        // 如果不是全選
+        finalCards = finalCards.filter((card) => {
+          return selectedTypes.has(card.cardType || 'credit');
+        });
+      }
+
+      setFilteredCards(finalCards);
       setActiveCategory(detectedCategory);
       setIsLoading(false);
     }, 300);
@@ -147,6 +181,120 @@ export function SearchPage({
     <div>
       <div className="mb-6 sm:mb-8">
         <SearchBar onSearch={handleSearch} query={query} />
+
+        {/* 卡片類型選擇 */}
+        <div className="flex flex-wrap gap-2 mt-4 justify-center">
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.size === 4
+                ? 'btn-primary hover:btn-primary hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-primary hover:btn-outline hover:border-primary hover:text-primary hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              if (selectedTypes.size === 4) {
+                setSelectedTypes(new Set()); // 清空
+              } else {
+                setSelectedTypes(
+                  new Set(['credit', 'debit', 'mobile', 'eticket'])
+                ); // 全選
+              }
+              if (hasSearched) handleSearch(query);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">🎯</span>
+              <span>全部</span>
+            </span>
+          </button>
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.has('credit')
+                ? 'btn-info hover:btn-info hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-info hover:btn-outline hover:border-info hover:text-info hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              const newTypes = new Set(selectedTypes);
+              if (selectedTypes.has('credit')) {
+                newTypes.delete('credit');
+              } else {
+                newTypes.add('credit');
+              }
+              setSelectedTypes(newTypes);
+              if (hasSearched) handleSearch(query);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">💳</span>
+              <span>信用卡</span>
+            </span>
+          </button>
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.has('debit')
+                ? 'btn-warning hover:btn-warning hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-warning hover:btn-outline hover:border-warning hover:text-warning hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              const newTypes = new Set(selectedTypes);
+              if (selectedTypes.has('debit')) {
+                newTypes.delete('debit');
+              } else {
+                newTypes.add('debit');
+              }
+              setSelectedTypes(newTypes);
+              if (hasSearched) handleSearch(query);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">🏛️</span>
+              <span>簽帳金融卡</span>
+            </span>
+          </button>
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.has('mobile')
+                ? 'btn-secondary hover:btn-secondary hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-secondary hover:btn-outline hover:border-secondary hover:text-secondary hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              const newTypes = new Set(selectedTypes);
+              if (selectedTypes.has('mobile')) {
+                newTypes.delete('mobile');
+              } else {
+                newTypes.add('mobile');
+              }
+              setSelectedTypes(newTypes);
+              if (hasSearched) handleSearch(query);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">📱</span>
+              <span>行動支付</span>
+            </span>
+          </button>
+          <button
+            className={`btn btn-sm sm:btn-md transition-all duration-200 ${
+              selectedTypes.has('eticket')
+                ? 'btn-accent hover:btn-accent hover:shadow-lg hover:-translate-y-0.5 hover:scale-105'
+                : 'btn-outline btn-accent hover:btn-outline hover:border-accent hover:text-accent hover:bg-transparent hover:shadow-md hover:-translate-y-0.5 hover:scale-105'
+            }`}
+            onClick={() => {
+              const newTypes = new Set(selectedTypes);
+              if (selectedTypes.has('eticket')) {
+                newTypes.delete('eticket');
+              } else {
+                newTypes.add('eticket');
+              }
+              setSelectedTypes(newTypes);
+              if (hasSearched) handleSearch(query);
+            }}
+          >
+            <span className="flex items-center gap-1 sm:gap-2">
+              <span className="text-base sm:text-lg">🎫</span>
+              <span>電子票證</span>
+            </span>
+          </button>
+        </div>
       </div>
 
       {hasSearched && filteredCards.length > 0 && (

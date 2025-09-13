@@ -38,8 +38,9 @@ export function CardItem({
     : relevantBenefits.filter((benefit) => !isExpired(benefit));
 
   const calculateActualRate = (benefit: Benefit) => {
-    const requiredConditions = benefit.conditions.filter((c) => c.required);
-    const optionalConditions = benefit.conditions.filter((c) => !c.required);
+    const conditions = benefit.conditions || [];
+    const requiredConditions = conditions.filter((c) => c.required);
+    const optionalConditions = conditions.filter((c) => !c.required);
 
     const allRequiredMet = requiredConditions.every(
       (condition) => conditionStatus[condition.id] === true
@@ -54,9 +55,9 @@ export function CardItem({
     ).length;
 
     const progressRatio =
-      benefit.conditions.length > 0
+      (benefit.conditions?.length || 0) > 0
         ? (requiredConditions.length + metOptionalConditions) /
-          benefit.conditions.length
+          (benefit.conditions?.length || 0)
         : 1;
 
     return (
@@ -65,8 +66,9 @@ export function CardItem({
   };
 
   const getConditionProgress = (benefit: Benefit) => {
-    const requiredConditions = benefit.conditions.filter((c) => c.required);
-    const optionalConditions = benefit.conditions.filter((c) => !c.required);
+    const conditions = benefit.conditions || [];
+    const requiredConditions = conditions.filter((c) => c.required);
+    const optionalConditions = conditions.filter((c) => !c.required);
 
     const metRequiredCount = requiredConditions.filter(
       (condition) => conditionStatus[condition.id] === true
@@ -77,7 +79,7 @@ export function CardItem({
     ).length;
 
     const totalMet = metRequiredCount + metOptionalCount;
-    const totalConditions = benefit.conditions.length;
+    const totalConditions = benefit.conditions?.length || 0;
 
     return {
       metRequiredCount,
@@ -117,15 +119,22 @@ export function CardItem({
         <div className="mb-4">
           <h2 className="card-title text-lg sm:text-xl">
             <span className="text-base sm:text-lg">
-              {!card.isPayment && (
-                <span className="badge badge-info badge-sm mr-1">信用卡</span>
+              {card.cardType === 'credit' && (
+                <span className="badge badge-info badge-sm mr-1">
+                  💳 信用卡
+                </span>
               )}
-              {card.isPayment && card.paymentType === 'mobile' && (
+              {card.cardType === 'debit' && (
+                <span className="badge badge-warning badge-sm mr-1">
+                  🏛️ 簽帳金融卡
+                </span>
+              )}
+              {card.cardType === 'mobile' && (
                 <span className="badge badge-secondary badge-sm mr-1">
                   行動支付
                 </span>
               )}
-              {card.isPayment && card.paymentType === 'eticket' && (
+              {card.cardType === 'eticket' && (
                 <span className="badge badge-accent badge-sm mr-1">
                   電子票證
                 </span>
@@ -283,7 +292,7 @@ export function CardItem({
           const actualRate = calculateActualRate(benefit);
           const expired = isExpired(benefit);
           const progress = getConditionProgress(benefit);
-          const hasMultipleConditions = benefit.conditions.length > 1;
+          const hasMultipleConditions = (benefit.conditions?.length || 0) > 1;
 
           return (
             <div
@@ -378,7 +387,7 @@ export function CardItem({
               )}
 
               {/* 條件進度條 */}
-              {benefit.conditions.length > 0 && !expired && (
+              {(benefit.conditions?.length || 0) > 0 && !expired && (
                 <div className="mb-4">
                   <div className="flex justify-between items-center mb-2">
                     <div className="text-sm font-medium text-base-content/80">
@@ -445,7 +454,7 @@ export function CardItem({
                 </div>
               )}
 
-              {benefit.conditions.length > 0 && (
+              {(benefit.conditions?.length || 0) > 0 && (
                 <div
                   className={`${expired ? 'bg-base-300/30 opacity-50' : 'bg-base-200'} rounded-lg p-3 sm:p-4`}
                 >
@@ -463,7 +472,7 @@ export function CardItem({
                     )}
                   </h4>
                   <div className="space-y-3">
-                    {benefit.conditions.map((condition) => {
+                    {(benefit.conditions || []).map((condition) => {
                       const isChecked = conditionStatus[condition.id] || false;
                       return (
                         <label
