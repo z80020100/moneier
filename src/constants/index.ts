@@ -1,6 +1,6 @@
-export const SEARCH_PLACEHOLDER = '輸入關鍵字搜尋支付優惠...';
+export const SEARCH_PLACEHOLDER = '搜尋支付工具、銀行、類別或商家...';
 
-export const SEARCH_HINT = '搜尋銀行、卡片、電子支付、類別或商家';
+export const SEARCH_HINT = '💡 快速找到最適合的支付優惠';
 
 export const QUICK_SEARCH_ITEMS = [
   '餐飲',

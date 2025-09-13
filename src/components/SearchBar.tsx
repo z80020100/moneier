@@ -99,7 +99,7 @@ export function SearchBar({ onSearch, query }: SearchBarProps) {
         {!query && (
           <div className="mt-6">
             <div className="text-sm text-base-content/60 text-center mb-3 hidden lg:block">
-              熱門搜尋
+              快速搜尋
             </div>
             <div className="flex flex-wrap gap-2 lg:gap-3 justify-center">
               {QUICK_SEARCH_ITEMS.map((item) => (

@@ -271,6 +271,132 @@
         }
       ],
       "isActive": true
+    },
+    {
+      "id": "pxpay-family",
+      "type": "payment",
+      "provider": "全盈+PAY",
+      "name": "全盈+PAY 全家優惠",
+      "officialUrl": "https://www.family.com.tw/app",
+      "benefits": [
+        {
+          "category": "超商",
+          "baseRate": 1,
+          "maxRate": 10,
+          "conditions": [
+            {
+              "id": "pxpay-new-binding",
+              "type": "new_user",
+              "description": "新綁定全盈支付",
+              "required": true
+            }
+          ],
+          "monthlyLimit": 50,
+          "validTo": "2025-12-31",
+          "notes": "新綁定全盈支付消費享10%回饋，每戶每類特選支付回饋上限50元",
+          "referenceUrl": "https://www.family.com.tw/app"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "easycard-youyoupay",
+      "type": "payment",
+      "provider": "悠遊付",
+      "name": "悠遊付筆筆回饋",
+      "officialUrl": "https://easycard.youyoupay.tw/",
+      "benefits": [
+        {
+          "category": "一般消費",
+          "baseRate": 2,
+          "maxRate": 3,
+          "conditions": [
+            {
+              "id": "youyoupay-bank-account",
+              "type": "payment_method",
+              "description": "搭配銀行帳戶扣款",
+              "required": true,
+              "value": "銀行帳戶"
+            },
+            {
+              "id": "youyoupay-new-user",
+              "type": "new_user",
+              "description": "新戶加碼1%",
+              "required": false
+            }
+          ],
+          "monthlyLimit": 200,
+          "validTo": "2025-09-30",
+          "notes": "悠遊付搭配銀行帳戶扣款享2%回饋，新戶加碼1%，合計最高3%",
+          "referenceUrl": "https://easycard.youyoupay.tw/promotion"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "jkopay-bills",
+      "type": "payment",
+      "provider": "街口支付",
+      "name": "街口支付繳費優惠",
+      "officialUrl": "https://www.jkopay.com/",
+      "benefits": [
+        {
+          "category": "繳費",
+          "baseRate": 1,
+          "maxRate": 2,
+          "conditions": [
+            {
+              "id": "jkopay-wednesday",
+              "type": "other",
+              "description": "每週三繳費",
+              "required": true
+            },
+            {
+              "id": "jkopay-taishin-card",
+              "type": "payment_method",
+              "description": "綁定台新銀行街口聯名卡",
+              "required": true,
+              "value": "台新街口聯名卡"
+            }
+          ],
+          "monthlyLimit": 100,
+          "notes": "綁定街口聯名卡每週三繳納水費、電費、瓦斯費等享最高2%回饋",
+          "referenceUrl": "https://www.jkopay.com/promotion"
+        }
+      ],
+      "isActive": true
+    },
+    {
+      "id": "taishin-pay-richart",
+      "type": "payment",
+      "provider": "台新Pay",
+      "name": "台新Pay Richart優惠",
+      "officialUrl": "https://www.taishinbank.com.tw/TSB/personal/digital/taishin-pay/",
+      "benefits": [
+        {
+          "category": "行動支付",
+          "baseRate": 0.3,
+          "maxRate": 3.8,
+          "conditions": [
+            {
+              "id": "taishin-pay-richart-card",
+              "type": "payment_method",
+              "description": "綁定台新Richart卡並切換至Pay著刷方案",
+              "required": true,
+              "value": "台新Richart卡"
+            },
+            {
+              "id": "taishin-pay-auto-debit",
+              "type": "other",
+              "description": "設定Richart/台新帳戶自動扣繳",
+              "required": true
+            }
+          ],
+          "notes": "11萬家通路使用台新Pay享3.8%無上限回饋",
+          "referenceUrl": "https://richart.tw/TSDIB_RichartWeb/card/credit-card"
+        }
+      ],
+      "isActive": true
     }
   ]
 }
