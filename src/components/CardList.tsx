@@ -64,10 +64,10 @@ export function CardList({
         <div className="text-center py-12 sm:py-16 px-6">
           <div className="text-5xl sm:text-6xl mb-6">🔍</div>
           <p className="text-xl sm:text-2xl text-base-content/70 font-medium mb-3">
-            沒有找到相關的支付優惠
+            找不到符合條件的方案
           </p>
           <p className="text-sm sm:text-base text-base-content/50 max-w-md mx-auto">
-            試試搜尋「台新」、「CUBE卡」、「LINE Pay」、「網購」或「7-11」
+            試試「台新」、「CUBE卡」、「LINE Pay」、「網購」或「餅熊外送」
           </p>
         </div>
       );

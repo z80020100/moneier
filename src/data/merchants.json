@@ -27,6 +27,10 @@
     "keywords": ["娛樂", "Netflix", "電影"],
     "description": "娛樂休閒消費"
   },
+  "Steam": {
+    "keywords": ["Steam", "steam", "遊戲", "PC遊戲", "電玩"],
+    "description": "Steam遊戲平台消費"
+  },
   "旅遊": {
     "keywords": ["旅遊", "飯店", "機票"],
     "description": "旅遊住宿相關消費"
@@ -46,5 +50,13 @@
   "電子票證": {
     "keywords": ["電子票證", "悠遊卡", "一卡通", "iCash", "愛金卡", "icash2.0"],
     "description": "電子票證卡片支付"
+  },
+  "海外消費": {
+    "keywords": ["海外消費", "國外刷卡", "出國", "海外網購", "國外", "海外"],
+    "description": "海外實體及網路消費"
+  },
+  "旅遊": {
+    "keywords": ["旅遊", "機票", "訂房", "航空", "飯店", "旅館", "哩程", "機場", "出國"],
+    "description": "旅遊相關消費及服務"
   }
 }
