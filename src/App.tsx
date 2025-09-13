@@ -9,8 +9,38 @@ import cardsData from './data/cards.json';
 import paymentsData from './data/payments.json';
 import './index.css';
 
-const allCards = cardsData.cards;
-const allPayments = paymentsData.payments;
+// 處理信用卡和簽帳金融卡
+const allCards = cardsData.cards.map((card) => {
+  // 檢查是否為簽帳金融卡
+  const isDebitCard =
+    card.name.includes('金融卡') ||
+    card.name.includes('簽帳') ||
+    card.name.includes('VISA金融卡') ||
+    card.name.includes('debit') ||
+    card.officialUrl?.includes('visa-debit') ||
+    false;
+
+  return {
+    ...card,
+    isDebitCard,
+    cardType: isDebitCard ? 'debit' : 'credit',
+  };
+});
+
+// 處理行動支付和電子票證
+const allPayments = paymentsData.payments.map((payment) => {
+  // 判斷是行動支付還是電子票證
+  const isETicket = ['easycard', 'ipass', 'icash-pay'].includes(payment.id);
+  const cardType = isETicket ? 'eticket' : 'mobile';
+
+  return {
+    ...payment,
+    isPayment: true,
+    paymentType: isETicket ? 'eticket' : 'mobile',
+    cardType,
+  };
+});
+
 const allItems = [...allCards, ...allPayments];
 
 // 統計資訊
@@ -62,7 +92,7 @@ function App() {
                       <div className="text-lg lg:text-xl font-bold text-primary">
                         {allItems.length}
                       </div>
-                      <div className="text-xs text-base-content/60">項</div>
+                      <div className="text-xs text-base-content/60">種方案</div>
                     </div>
                   </div>
                 </div>
@@ -74,7 +104,7 @@ function App() {
                         {myCards.length}
                       </div>
                       <div className="text-xs text-base-content/60">
-                        我的錢包
+                        我的收藏
                       </div>
                     </div>
                   </div>
@@ -86,7 +116,7 @@ function App() {
                       <div className="text-lg lg:text-xl font-bold text-warning">
                         {totalBenefits}
                       </div>
-                      <div className="text-xs text-base-content/60">項優惠</div>
+                      <div className="text-xs text-base-content/60">項回饋</div>
                     </div>
                   </div>
                 </div>
@@ -148,7 +178,7 @@ function App() {
           </main>
 
           <footer className="text-center mt-8 sm:mt-12 py-6 text-xs sm:text-sm text-base-content/50 px-4">
-            <p>資料僅供參考，請以銀行公告為準。</p>
+            <p>💡 資料僅供參考，實際優惠請以各機構官方公告為準</p>
           </footer>
         </div>
       </div>
